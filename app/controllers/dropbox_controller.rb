@@ -1,5 +1,7 @@
 class DropboxController < ApplicationController
 
+  include EncryptionHelper
+
   before_action {
     if params[:user_uuid]
       @user = User.find_by_uuid(params[:user_uuid])
@@ -10,13 +12,16 @@ class DropboxController < ApplicationController
     if !@user
       render :json => {:error => "Unable to load extension."}
     end
+
+    key = params[:key]
+
     name = "Dropbox Sync"
     supported_types = ["Note"]
     actions = [
       {
         :label => "Auto-push changes",
         :desc => "Pushes item changes to Dropbox folder.",
-        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/push",
+        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/push?key=#{key}",
         :verb => "post",
         :repeat_mode => "watch",
         :repeat_timeout => 7,
@@ -24,12 +29,12 @@ class DropboxController < ApplicationController
         :content_types => ["*"],
         :permissions => "read",
         :accepts_decrypted => true,
-        :accepts_encrypted => false
+        :accepts_encrypted => true
       },
       {
         :label => "Perform initial sync",
         :desc => "Syncs all your current items. This can take several minutes, depending on how many items you have.",
-        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/initial_sync",
+        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/initial_sync?key=#{key}",
         :verb => "post",
         :context => "global",
         :content_types => ["*"],
@@ -41,7 +46,7 @@ class DropboxController < ApplicationController
       {
         :label => "Save to Dropbox",
         :desc => "Syncs this item to Dropbox.",
-        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/push_one",
+        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/push_one?key=#{key}",
         :verb => "post",
         :context => "Item",
         :content_types => ["*"],
@@ -52,7 +57,7 @@ class DropboxController < ApplicationController
       {
         :label => "Download import file",
         :desc => "Downloads import file in standard format.",
-        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/download",
+        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/download?key=#{key}",
         :context => "global",
         :verb => "show"
       }
@@ -61,8 +66,14 @@ class DropboxController < ApplicationController
   end
 
   def dropbox
+    if @dropbox
+      return @dropbox
+    end
+
     require 'dropbox'
-    dropbox = Dropbox::Client.new(@user.dropbox_token)
+    key = params[:key]
+    dropbox_token = EncryptionHelper.decrypt(@user.enc_dropbox_token, key)
+    @dropbox = Dropbox::Client.new(dropbox_token)
   end
 
   def push
@@ -110,6 +121,7 @@ class DropboxController < ApplicationController
     send_data body.to_s, filename: "dropbox-notes.txt"
   end
 
+
   def dropbox_auth_complete
     @user = User.new
     code = params[:code]
@@ -132,9 +144,21 @@ class DropboxController < ApplicationController
       redirect_to "/extensions/dropbox?secret_url=error"
     else
       data = JSON.parse(resp.to_s)
-      @user.dropbox_token = data["access_token"]
+
+      # encrypt token before storing. do not save key.
+      # return key to user for safe storing
+
+      dropbox_token = data["access_token"]
+      key = EncryptionHelper.generate_random_key
+      encrypted_token = EncryptionHelper.encrypt(dropbox_token, key)
+
+      puts "Token: #{dropbox_token}"
+      puts "Encrypted token: #{encrypted_token}"
+
+      @user.enc_dropbox_token = encrypted_token
       @user.save!
-      @secret_url = "http://localhost:3002/ext/dropbox/#{@user.uuid}"
+
+      @secret_url = "http://localhost:3002/ext/dropbox/#{@user.uuid}?key=#{key}"
       redirect_to "/extensions/dropbox?secret_url=#{@secret_url}"
     end
 

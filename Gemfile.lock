@@ -107,6 +107,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.9.1)
+    mysql2 (0.4.5)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.2.0)
@@ -169,7 +170,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.3.12)
     sshkit (1.11.4)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -206,6 +206,7 @@ DEPENDENCIES
   capistrano-sidekiq
   dotenv-rails (~> 2.1.1)
   dropbox-sdk-v2
+  mysql2 (>= 0.3.13, < 0.5)
   non-stupid-digest-assets
   puma
   rack-cors
@@ -214,7 +215,6 @@ DEPENDENCIES
   sass
   sdoc (~> 0.4.0)
   spring
-  sqlite3
   uglifier
   web-console (~> 2.0)
 

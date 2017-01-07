@@ -2,8 +2,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.0.1'
-
-gem 'sqlite3'
+gem 'mysql2', '>= 0.3.13', '< 0.5'
 
 gem 'dropbox-sdk-v2'
 

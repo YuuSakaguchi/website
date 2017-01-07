@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20170103222950) do
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
     t.string   "uuid"
     t.string   "enc_dropbox_token"

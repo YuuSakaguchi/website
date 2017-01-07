@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html ng-app="app.main" ng-controller="BaseCtrl">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta charset="UTF-8"/>
+    <title>Standard Notes - standard notes app, un-standard every other way.</title>
+    <meta content="Standard Notes" name="apple-mobile-web-app-title"/>
+    <meta content="Standard Notes" name="application-name"/>
+    <base href="/"></base>
+    <meta content="A standard notes app with an un-standard focus on longevity, portability, and privacy." name="description"/>
+    <meta content="Standard Notes" name="twitter:title"/>
+    <meta content="A standard notes app with an un-standard focus on longevity, portability, and privacy." name="twitter:description"/>
+    <meta content="@standardnotes" name="twitter:site"/>
+    <meta content="summary" name="twitter:card"/>
+    <meta content="Standard Notes" name="og:title"/>
+    <meta content="A standard notes app with an un-standard focus on longevity, portability, and privacy." name="og:description"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+    <% if Rails.env.development? %>
+      <%= javascript_include_tag "compiled.js", debug: true %>
+    <% else %>
+      <%= javascript_include_tag "compiled.min.js", debug: false %>
+    <% end %>
+    <%= stylesheet_link_tag "app", media: "all", debug: false %>
+
+  </head>
+
+  <body ng-class="bodyClass">
+    <div ui-view="content"></div>
+  </body>
+
+</html>

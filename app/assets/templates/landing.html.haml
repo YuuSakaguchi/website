@@ -1,0 +1,66 @@
+.main-ui-view
+  %section.main-content
+    .header
+      .project-name Standard Notes
+      .project-tagline A standard notes app with an un-standard focus on longevity, portability, and privacy.
+
+      .downloads-container
+        .download-item
+          %a.content-link{"href" => "https://app.standardnotes.org", "target" => "_blank"}
+            .icon
+              %img{"src" => "assets/ico-chrome.png"}
+            .links
+              %a.link.block{"href" => "https://app.standardnotes.org", "target" => "_blank"} Web
+
+        .download-item
+          %a.content-link{"href" => "https://github.com/standardnotes/electron/releases/download/v0.0.2/Standard.Notes-mac-x64.zip", "target" => "_blank"}
+            .icon
+              %img{"src" => "assets/ico-apple.png"}
+            .links
+              %a.link.inline{"href" => "https://github.com/standardnotes/iOS", "target" => "_blank"} iOS
+              %a.link.inline{"href" => "https://github.com/standardnotes/electron/releases/download/v0.0.2/Standard.Notes-mac-x64.zip", "target" => "_blank"} Mac
+
+        .download-item
+          %a.content-link{"href" => "https://github.com/standardnotes/electron/releases/download/v0.0.2/Standard.Notes-windows-x64.zip", "target" => "_blank"}
+            .icon
+              %img{"src" => "assets/ico-windows.png"}
+            .links
+              %a.link.block{"href" => "https://github.com/standardnotes/electron/releases/download/v0.0.2/Standard.Notes-windows-x64.zip", "target" => "_blank"} Windows
+
+        .download-item
+          %a.content-link{"href" => "https://github.com/standardnotes/electron/releases/download/v0.0.2/Standard.Notes-linux-x64.zip", "target" => "_blank"}
+            .icon
+              %img{"src" => "assets/ico-linux.png"}
+            .links
+              %a.link.block{"href" => "https://github.com/standardnotes/electron/releases/download/v0.0.2/Standard.Notes-linux-x64.zip", "target" => "_blank"} Linux
+
+        .download-item.na
+          %a.content-link
+            .icon
+              %img{"src" => "assets/ico-android.png"}
+            .links
+              %a.link.block.na Coming
+
+
+      .email-subscribe-wrapper
+        .content
+          .title Stay up to date with Standard Notes releases and news.
+          .subtitle Subscribe to Standard Notes announcements.
+          %link{:href => "//cdn-images.mailchimp.com/embedcode/slim-10_7.css", :rel => "stylesheet", :type => "text/css"}/
+          :css
+            #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width: 100%;}
+          #mc_embed_signup
+            %form#mc-embedded-subscribe-form.validate{:action => "//standardnotes.us14.list-manage.com/subscribe/post?u=f703bdd7fd7cd0923a94b3bd3&id=8523dd24a8", :method => "post", :name => "mc-embedded-subscribe-form", :novalidate => "", :target => "_blank"}
+              #mc_embed_signup_scroll
+                %input#mce-EMAIL.email{:name => "EMAIL", :placeholder => "email address", :required => "", :type => "email", :value => ""}
+                / real people should not fill this in and expect good things - do not remove this or risk form bot signups
+                %div{"aria-hidden" => "true", :style => "position: absolute; left: -5000px;"}
+                  %input{:name => "b_f703bdd7fd7cd0923a94b3bd3_8523dd24a8", :tabindex => "-1", :type => "text", :value => ""}/
+                .clear
+                  %input#mc-embedded-subscribe.button{:name => "subscribe", :type => "submit", :value => "Subscribe"}
+          .social
+            %a.icon-twitter{"href" => "https://twitter.com/standardnotes", "target" => "_blank"}
+            %a.icon-github{"href" => "https://github.com/standardnotes", "target" => "_blank"}
+            %a.icon-reddit{"href" => "https://www.reddit.com/r/StandardNotes/", "target" => "_blank"}
+
+    %ng-include{"src" => "'doc/spec.html'"}

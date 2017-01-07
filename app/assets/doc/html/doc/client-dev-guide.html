@@ -1,0 +1,584 @@
+<!DOCTYPE  html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>doc</title>
+    <style>
+      /*github.com style (c) Vasily Polovnyov <vast@whiteants.net>*/
+      pre code {
+        display: block; padding: 0.5em;
+        color: #333;
+        background: #f8f8ff
+      }
+      pre .comment,
+      pre .template_comment,
+      pre .diff .header,
+      pre .javadoc {
+        color: #998;
+        font-style: italic
+      }
+      pre .keyword,
+      pre .css .rule .keyword,
+      pre .winutils,
+      pre .javascript .title,
+      pre .nginx .title,
+      pre .subst,
+      pre .request,
+      pre .status {
+        color: #333;
+        font-weight: bold
+      }
+      pre .number,
+      pre .hexcolor,
+      pre .ruby .constant {
+        color: #099;
+      }
+      pre .string,
+      pre .tag .value,
+      pre .phpdoc,
+      pre .tex .formula {
+        color: #d14
+      }
+      pre .title,
+      pre .id {
+        color: #900;
+        font-weight: bold
+      }
+      pre .javascript .title,
+      pre .lisp .title,
+      pre .clojure .title,
+      pre .subst {
+        font-weight: normal
+      }
+      pre .class .title,
+      pre .haskell .type,
+      pre .vhdl .literal,
+      pre .tex .command {
+        color: #458;
+        font-weight: bold
+      }
+      pre .tag,
+      pre .tag .title,
+      pre .rules .property,
+      pre .django .tag .keyword {
+        color: #000080;
+        font-weight: normal
+      }
+      pre .attribute,
+      pre .variable,
+      pre .lisp .body {
+        color: #008080
+      }
+      pre .regexp {
+        color: #009926
+      }
+      pre .class {
+        color: #458;
+        font-weight: bold
+      }
+      pre .symbol,
+      pre .ruby .symbol .string,
+      pre .lisp .keyword,
+      pre .tex .special,
+      pre .prompt {
+        color: #990073
+      }
+      pre .built_in,
+      pre .lisp .title,
+      pre .clojure .built_in {
+        color: #0086b3
+      }
+      pre .preprocessor,
+      pre .pi,
+      pre .doctype,
+      pre .shebang,
+      pre .cdata {
+        color: #999;
+        font-weight: bold
+      }
+      pre .deletion {
+        background: #fdd
+      }
+      pre .addition {
+        background: #dfd
+      }
+      pre .diff .change {
+        background: #0086b3
+      }
+      pre .chunk {
+        color: #aaa
+      }
+    </style>
+  </head>
+  <body>  
+    <p>##Standard File — Client Development Guide</p>
+<p>This guide walks through the essentials of building an application that consumes a Standard File API. This code is based on the Standard Notes client, and uses a non-compileable Javascript-ish pseudocode.</p>
+<p>For the full specification, see the <a href="http://standardfile.org/">Standard File guide</a>.</p>
+<h3 id="authentication">Authentication</h3>
+<p>To authenticate a user, we need to make a request to the server to retrieve the password derivation parameters used to generate the user&#39;s password. This information is public, and can be retrieved by a GET call to <code>/auth/params</code> with <code>email</code> as a paramter:</p>
+<pre><code>getAuthParamsForEmail(email, callback) {
+    var <span class="hljs-built_in">request</span> = Restangular.one(<span class="hljs-string">"auth"</span>, <span class="hljs-string">"params"</span>);
+    <span class="hljs-built_in">request</span>.<span class="hljs-keyword">get</span>({email: email}).<span class="hljs-keyword">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-built_in">response</span>){
+      callback(<span class="hljs-built_in">response</span>.plain());
+    })
+}
+</code></pre><p>Auth params include:</p>
+<ul>
+<li>pw_func (only PBKDF2 is currently supported)</li>
+<li>pw_alg (can be either sha256 or sha512)</li>
+<li>pw_salt (fed to pw_func)</li>
+<li>pw_cost (the number of iterations for the kdf)</li>
+<li>pw_key_size (the output size of the key in bits)</li>
+</ul>
+<p>Next, compute the user&#39;s password and encryption keys using the user&#39;s text field inputted password:</p>
+<pre><code>generatePasswordAndKey(password, pw_salt, pw_func, pw_alg, pw_cost, pw_key_size) {
+     <span class="hljs-keyword">var</span> algMapping = {
+       <span class="hljs-string">"sha256"</span> : CryptoJS.algo.SHA256,
+       <span class="hljs-string">"sha512"</span> : CryptoJS.algo.SHA512
+     }
+     <span class="hljs-keyword">var</span> fnMapping = {
+       <span class="hljs-string">"pbkdf2"</span> : CryptoJS.PBKDF2
+     }
+
+     <span class="hljs-keyword">var</span> alg = algMapping[pw_alg];
+     <span class="hljs-keyword">var</span> kdf = fnMapping[pw_func];
+     <span class="hljs-keyword">var</span> output = kdf(password, pw_salt, { keySize: pw_key_size/32, hasher: alg, iterations: pw_cost }).<span class="hljs-keyword">toString</span>();
+
+     <span class="hljs-keyword">var</span> outputLength = output.length;
+     <span class="hljs-keyword">var</span> pw = output.slice(0, outputLength/2);
+     <span class="hljs-keyword">var</span> mk = output.slice(outputLength/2, outputLength);
+     <span class="hljs-keyword">return</span> [pw, mk]
+}
+</code></pre><p>Here the return values are <code>pw</code>, which is the password that will be sent to the server, and <code>mk</code>, which is the master encryption key, which is never sent to the server.</p>
+<p>From here, it&#39;s basic authentication as usual:</p>
+<pre><code>var <span class="hljs-built_in">request</span> = Restangular.one(<span class="hljs-string">"auth/sign_in"</span>);
+var params = {password: pw, email: email};
+<span class="hljs-built_in">request</span>.post().<span class="hljs-keyword">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-built_in">response</span>){
+  var jwt = <span class="hljs-built_in">response</span>.token;
+  localStorage.setItem(<span class="hljs-string">"jwt"</span>, <span class="hljs-built_in">response</span>.token);
+  callback(<span class="hljs-built_in">response</span>);
+})
+</code></pre><p>Here we capture <code>jwt</code>, which is a JSON Web Token, and save it locally. This token must be passed to any future API calls to authenticate the user.</p>
+<p>You send this token via an HTTP header:
+<code>Authorization: Bearer _jwt_value_</code></p>
+<h3 id="registration">Registration</h3>
+<p>On registration, the client must decide the auth params themselves. There are recommended defaults available <a href="http://standardfile.org/#key-generation">here</a>. As of the time of this writing, they are:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Function</td>
+<td>PBKDF2</td>
+</tr>
+<tr>
+<td>Algorithm</td>
+<td>SHA512</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>60,000</td>
+</tr>
+<tr>
+<td>Key size</td>
+<td>512</td>
+</tr>
+</tbody>
+</table>
+<p>To register, the client must also generate a salt. For logging in, the salt is returned by the server, but for registering, it must be done locally.</p>
+<p><strong>Generating a salt:</strong></p>
+<ol>
+<li>Generate a random key <code>pw_nonce</code>.</li>
+<li>Compute <code>salt = SHA1(email + &quot;SN&quot; + pw_nonce)</code></li>
+</ol>
+<p>Then, call the same <code>generatePasswordAndKey</code> function you used for logging in. Then, when registering, make a POST request to <code>auth</code> with the auth params you used, including the salt <strong>and</strong> <code>pw_nonce</code>:</p>
+<pre><code>  var <span class="hljs-built_in">request</span> = Restangular.one(<span class="hljs-string">"auth"</span>);
+  var params = {
+                  password: pw, email: email, pw_salt: pw_salt, 
+                  pw_nonce: pw_nonce, pw_func: pw_func, pw_alg: pw_alg, 
+                  pw_cost: pw_cost, pw_key_size: pw_key_size
+                  };
+  <span class="hljs-built_in">request</span>.post().<span class="hljs-keyword">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-built_in">response</span>){
+    localStorage.setItem(<span class="hljs-string">"jwt"</span>, <span class="hljs-built_in">response</span>.token);
+    callback(<span class="hljs-built_in">response</span>);
+  })
+</code></pre><p>Save the JWT.</p>
+<h2 id="architecture">Architecture</h2>
+<p>What follows is a recommended set up for how models and controllers should be structured on the client. This can however be done in whatever way the developer prefers.</p>
+<h3 id="models">Models</h3>
+<p>Create a class called <code>Item</code>. This model should have all metadata related fields of items returned from the server, including:</p>
+<p><strong>Abstract <code>Item</code> class:</strong></p>
+<ul>
+<li>uuid</li>
+<li>content</li>
+<li>enc_item_key</li>
+<li>content_type</li>
+<li>presentation_name</li>
+<li>url</li>
+<li>created_at</li>
+<li>updated_at</li>
+<li>deleted</li>
+</ul>
+<p>Then, create subclasses of <code>Item</code> for structures that your application supports. In the case of the Standard Notes app, that will be a <code>Note</code> class and a <code>Tag</code> class:</p>
+<p><strong>Note extends Item:</strong></p>
+<ul>
+<li>title</li>
+<li>text</li>
+</ul>
+<p><strong>Tag extends Item:</strong></p>
+<ul>
+<li>title</li>
+</ul>
+<h3 id="controllers">Controllers</h3>
+<p>Three main controllers are relied on for a clean separation of concerns:</p>
+<ul>
+<li><strong>ItemManager</strong>: responsible for mapping items returned from the server to local models.</li>
+<li><strong>ApiController</strong>: responsible for communicating and retrieving changes from the server, as well as faciliating encryption/decryption with the help of CryptoHelper.</li>
+<li><strong>CryptoHelper</strong>: decrypts/encrypts outgoing and incoming items from ApiController.</li>
+</ul>
+<p>Note that encryption and decryption should be handled by the ApiController <em>before</em> it passes it off to the ModelManager. It should be treated as an API level thing, and should not be intertwined with normal application logic.</p>
+<p>First, let&#39;s handle fetching new items. </p>
+<p><strong>ApiController</strong></p>
+<pre><code>refreshItems() {
+    <span class="hljs-keyword">let</span> <span class="hljs-built_in">request</span> = Restangular.one(<span class="hljs-string">"items/sync"</span>);
+    <span class="hljs-keyword">if</span>(self.syncToken) {
+        <span class="hljs-built_in">request</span>.syncToken = self.syncToken;
+    }
+    <span class="hljs-built_in">request</span>.post().<span class="hljs-keyword">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-built_in">response</span>){
+        self.syncToken = <span class="hljs-built_in">response</span>.sync_token;
+        self.handleResponseItems(<span class="hljs-built_in">response</span>.retrieved_items);
+    })
+}
+</code></pre><pre><code><span class="hljs-component">handleResponseItems(responseItems) {
+    CryptoHelper<span class="hljs-string">.decryptResponseItems(responseItems)</span>;
+    ItemManager<span class="hljs-string">.sharedInstance.mapResponseItemsToLocalItems(responseItems)</span>;
+}</span>
+</code></pre><p><strong>CryptoHelper</strong></p>
+<pre><code><span class="hljs-comment">// Modifies response items in place</span>
+decryptResponseItems(responseItems) {
+    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> responseItems {
+        <span class="hljs-keyword">self</span><span class="hljs-variable">.decryptItem</span>(item);
+    }
+}
+</code></pre><p>We&#39;ll go over the <code>decryptItem</code> function further below.</p>
+<p><strong>ItemManager</strong></p>
+<pre><code>mapResponseItemsToLocalItems(responseItems) {
+    var mappedItems = [];
+    <span class="hljs-keyword">for</span> responseItem <span class="hljs-keyword">in</span> responseItems {
+        <span class="hljs-keyword">if</span> responseItem[<span class="hljs-string">"deleted"</span>] == <span class="hljs-constant">true</span> {
+            let <span class="hljs-property">item</span> = Database.find(uuid: responseItem[<span class="hljs-string">"uuid"</span>]);
+            <span class="hljs-keyword">if</span>(<span class="hljs-property">item</span>) {
+                Database.remove(<span class="hljs-property">item</span>);
+            }
+            <span class="hljs-keyword">continue</span>;
+        }
+
+        let <span class="hljs-property">item</span> = Database.findOrCreate(uuid: responseItem[<span class="hljs-string">"uuid"</span>]);
+        <span class="hljs-property">item</span>.updateFromJSON(responseItem);
+        self.resolveReferencesForItem(<span class="hljs-property">item</span>);
+    }
+}
+</code></pre><p><strong>Item</strong></p>
+<pre><code>updateFromJSON(jsonDic) {
+    <span class="hljs-keyword">self</span>.uuid = jsonDic[<span class="hljs-string">"uuid"</span>]
+    <span class="hljs-keyword">self</span>.contentType = jsonDic[<span class="hljs-string">"content_type"</span>]
+    <span class="hljs-keyword">self</span>.presentationName = jsonDic[<span class="hljs-string">"presentation_name"</span>]
+    <span class="hljs-keyword">self</span>.encItemKey = json[<span class="hljs-string">"enc_item_key"</span>]
+    <span class="hljs-keyword">self</span>.url = jsonDic[<span class="hljs-string">"presentation_url"</span>]
+    <span class="hljs-keyword">self</span>.createdAt = dateFromString(jsonDic[<span class="hljs-string">"created_at"</span>])
+    <span class="hljs-keyword">self</span>.updatedAt = dateFromString(jsonDic[<span class="hljs-string">"updated_at"</span>])
+
+    <span class="hljs-keyword">self</span>.content = jsonDic[<span class="hljs-string">"content"</span>] <span class="hljs-comment">// this is just a string</span>
+
+    <span class="hljs-keyword">let</span> contentObject = JSON.parse(<span class="hljs-keyword">self</span>.content)
+    mapContentToLocalProperties(contentObject)
+}
+</code></pre><p>Then each subclass will override their own implementation of <code>mapContentToLocalProperties</code>:</p>
+<p><strong>Note</strong></p>
+<pre><code>mapContentToLocalProperties(contentObject) {
+    <span class="hljs-comment">// super has no role here, but we'll call it in case we decide to make changes</span>
+    <span class="hljs-keyword">super</span><span class="hljs-variable">.mapContentToLocalProperties</span>(contentObject)
+    <span class="hljs-keyword">self</span><span class="hljs-variable">.title</span> = contentObject[<span class="hljs-string">"title"</span>]
+    <span class="hljs-keyword">self</span><span class="hljs-variable">.text</span> = contentObject[<span class="hljs-string">"text"</span>]
+}
+</code></pre><p><strong>Tag</strong></p>
+<pre><code>mapContentToLocalProperties(contentObject) {
+    <span class="hljs-keyword">super</span>.mapContentToLocalProperties(contentObject)
+    <span class="hljs-keyword">self</span>.title = contentObject[<span class="hljs-string">"title"</span>]
+}
+</code></pre><p>Each Item&#39;s content field can have an array of referenced items in its <code>references</code> field. This can look like this:</p>
+<p>Item: </p>
+<pre><code>{
+  "<span class="hljs-attribute">uuid</span>": <span class="hljs-value"><span class="hljs-string">"ec549665-824d-4078-a65a-8e1e223e33bf"</span></span>,
+  "<span class="hljs-attribute">content_type</span>": <span class="hljs-value"><span class="hljs-string">"Note"</span></span>,
+  "<span class="hljs-attribute">content</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">references</span>": <span class="hljs-value">[
+      {
+        "<span class="hljs-attribute">uuid</span>": <span class="hljs-value"><span class="hljs-string">"cb92d48d-536b-40f8-be79-95de7ec1dff5"</span></span>,
+        "<span class="hljs-attribute">content_type</span>": <span class="hljs-value"><span class="hljs-string">"Tag"</span>
+      </span>}
+    ]</span>,
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"My Note"</span></span>,
+    "<span class="hljs-attribute">text</span>": <span class="hljs-value"><span class="hljs-string">"Hello world."</span>
+  </span>}</span>,
+}
+</code></pre><p><code>ItemManager.resolveReferencesForItem</code> simply sets up the local relationships for the models you just created or updated:</p>
+<pre><code>resolveReferencesForItem(<span class="hljs-property">item</span>) {
+    <span class="hljs-property">item</span>.clearReferences()
+    let references = <span class="hljs-property">item</span>.contentObject[<span class="hljs-string">"references"</span>]
+    <span class="hljs-keyword">for</span> <span class="hljs-keyword">reference</span> <span class="hljs-keyword">in</span> references {
+        let referencedItem = Database.find(<span class="hljs-keyword">reference</span>[<span class="hljs-string">"uuid"</span>]
+        <span class="hljs-keyword">if</span> referencedItem {
+            <span class="hljs-property">item</span>.addItemAsRelationship(referencedItem)
+        }    
+    }
+}
+</code></pre><p>And then in the individual model classes, you&#39;d do something like this:</p>
+<p><strong>Note</strong></p>
+<pre><code>addItemAsRelationship(<span class="hljs-property">item</span>) {
+    <span class="hljs-keyword">if</span> <span class="hljs-property">item</span>.contentType == <span class="hljs-string">"Tag"</span> {
+        self.addTag(<span class="hljs-property">item</span>);
+    }
+    super.addItemAsRelationship(<span class="hljs-property">item</span>);
+}
+</code></pre><p>Next, let&#39;s handle saving items to the server.</p>
+<p>Add a field to your local models <code>dirty</code>. Anytime you make a change to an item, set <code>dirty</code> equal to <code>true</code>.</p>
+<p>Then ask the ApiController to upload changes:</p>
+<p>ApiController:</p>
+<pre><code>saveDirty() {
+    <span class="hljs-keyword">let</span> dirty = ItemManager.sharedInstance.fetchDirty()
+    <span class="hljs-keyword">let</span> itemParams = _map(dirty, <span class="hljs-keyword">function</span>(item){
+        return self.paramsForItem(item);
+    })
+
+    <span class="hljs-keyword">let</span> <span class="hljs-built_in">request</span> = Restangular.one(<span class="hljs-string">"items/sync"</span>);
+    <span class="hljs-built_in">request</span>.items = itemParams;
+    <span class="hljs-built_in">request</span>.post().<span class="hljs-keyword">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-built_in">response</span>(){
+        <span class="hljs-keyword">let</span> savedItems = <span class="hljs-built_in">response</span>.saved_items;
+        self.handleResponseItems(savedItems, metadataOnly: <span class="hljs-literal">true</span>)
+    })
+}
+</code></pre><p>Upon completion, the server will return your saved items under the <code>saved_items</code> param. You don&#39;t want to merge the <code>content</code> from these items with your local models because your local models could have updated content. For example, imagine you&#39;re dealing with a Note. </p>
+<p>The user types the text &quot;Hello&quot;, the app sync those changes. By the time the request is complete, the user has typed &quot;World&quot;. If you merge the saved_items with your local items, then it will delete &quot;World&quot;. For this reason, you should only merge metadata from saved items. This means every field <em>except</em> for <code>content</code>, <code>enc_item_key</code>, and <code>auth_hash</code>.</p>
+<p><strong>ApiController</strong></p>
+<pre><code>paramsForItem(item) {
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">params</span> = {}
+    <span class="hljs-keyword">params</span>[<span class="hljs-string">"content_type"</span>] = item.contentType
+    <span class="hljs-keyword">params</span>[<span class="hljs-string">"uuid"</span>] = item.uuid
+    <span class="hljs-keyword">params</span>[<span class="hljs-string">"presentation_name"</span>] = item.presentationName
+    <span class="hljs-keyword">params</span>[<span class="hljs-string">"deleted"</span>] = item.deleted
+
+    <span class="hljs-keyword">if</span> item.isPublic() {
+        <span class="hljs-comment">// send decrypted</span>
+        <span class="hljs-keyword">params</span>[<span class="hljs-string">"enc_item_key"</span>] = <span class="hljs-keyword">null</span>
+        <span class="hljs-keyword">params</span>[<span class="hljs-string">"auth_hash"</span>] = <span class="hljs-keyword">null</span>
+        <span class="hljs-keyword">params</span>[<span class="hljs-string">"content"</span>] = <span class="hljs-string">"000"</span> + CryptoHelper.base64(message: item.createContentJSONStringFromProperties();
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// send encrypted</span>
+        <span class="hljs-keyword">let</span> encryptedParams = Crypto.encryptionParamsForItem(item);
+        <span class="hljs-keyword">params</span>.merge(encryptedParams);
+    }
+}
+</code></pre><p><strong>Item</strong></p>
+<pre><code>createContentJSONStringFromProperties() {
+    <span class="hljs-built_in">var</span> <span class="hljs-keyword">params</span> <span class="hljs-subst">=</span> <span class="hljs-built_in">self</span><span class="hljs-built_in">.</span>structureParams()
+    <span class="hljs-keyword">return</span> JSON<span class="hljs-built_in">.</span>stringify(<span class="hljs-keyword">params</span>)
+}
+</code></pre><p>The base class Item will implement the <code>structureParams()</code> method, along with subclasses. The Item class will handle setting up references, while the individual subclasses will handle properties specific to that class.</p>
+<p><strong>Item</strong></p>
+<pre><code><span class="hljs-class"><span class="hljs-keyword">struct</span><span class="hljs-title">ureParams</span>() </span>{
+    <span class="hljs-keyword">return</span> [<span class="hljs-string">"references"</span> : referencesParams()]
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">referencesParams</span><span class="hljs-params">()</span> </span>{
+    fatalError(<span class="hljs-string">"This method must be overridden"</span>)
+}
+</code></pre><p>Then in individual subclasses, like <strong>Note</strong>:</p>
+<pre><code>structureParams() {
+    let params = {
+        "title" : self.title,
+       "text" : self.text
+    }
+
+    // must <span class="hljs-operator"><span class="hljs-keyword">merge</span> <span class="hljs-keyword">with</span> super
+    params.mergeWith(super.structureParams())
+
+    <span class="hljs-keyword">return</span> params
+}
+
+// <span class="hljs-keyword">Returns</span> an <span class="hljs-built_in">array</span> <span class="hljs-keyword">of</span> dictionaries <span class="hljs-keyword">of</span> related item metadata (<span class="hljs-keyword">uuid</span> <span class="hljs-keyword">and</span> content type <span class="hljs-keyword">only</span>).
+referencesParams() {
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">references</span> = []
+    <span class="hljs-keyword">for</span> tag <span class="hljs-keyword">in</span> self.tags {
+        <span class="hljs-keyword">references</span>.append([<span class="hljs-string">"uuid"</span> : tag.<span class="hljs-keyword">uuid</span>, <span class="hljs-string">"content_type"</span> : tag.contentType])
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">references</span>
+}</span>
+</code></pre><p>Note that when sending an Item decrypted, you should null out <code>enc_item_key</code> and <code>auth_hash</code>. Make sure that these keys are present when sent to the server, but have a nil value.</p>
+<p><strong>CryptoHelper</strong></p>
+<pre><code>encryptionParamsForItem(<span class="hljs-keyword">item</span>) {
+    var <span class="hljs-built_in">params</span> = {}
+    let message = <span class="hljs-keyword">item</span>.createContentJSONStringFromProperties()
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">item</span>.encItemKey == nil {
+        self.createKeyForItem(<span class="hljs-keyword">item</span>)
+    }
+    let <span class="hljs-built_in">keys</span> = self.keysForItem(<span class="hljs-keyword">item</span>)
+    <span class="hljs-built_in">params</span>[<span class="hljs-string">"content"</span>] = <span class="hljs-string">"001"</span> + self.<span class="hljs-built_in">encrypt</span>(message, <span class="hljs-built_in">keys</span>[<span class="hljs-string">"ek"</span>])
+    <span class="hljs-built_in">params</span>[<span class="hljs-string">"enc_item_key"</span>] = <span class="hljs-keyword">item</span>.encItemKey
+    <span class="hljs-built_in">params</span>[<span class="hljs-string">"auth_hash"</span>] = self.computeAuthHash(<span class="hljs-built_in">params</span>[<span class="hljs-string">"content"</span>], <span class="hljs-built_in">keys</span>[<span class="hljs-string">"ak"</span>])
+    <span class="hljs-constant">return</span> <span class="hljs-built_in">params</span>
+}
+</code></pre><p>When sending <code>content</code> unencrypted, we append a &quot;000&quot; to the base64 string to indicate that it is unencrypted. When sending encrypted, we append a &quot;001&quot; to the base64 string.</p>
+<pre><code>createKeyForItem(item) {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">hex =</span> self.generateRandomHexKey(size: <span class="hljs-number">512</span>)
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">encryptedKey =</span> self.encrypt(hex, User.masterKey)
+    item.<span class="hljs-variable">encItemKey =</span> encryptedKey
+}
+
+keysForItem(item) {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">decryptedKey =</span> self.decrypt(item.encItemKey, User.masterKey)
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">ek =</span> decryptedKey.firstHalfOfString();
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">ak =</span> decryptedKey.secondHalfOfString();
+    return {<span class="hljs-string">"ek"</span> : ek, <span class="hljs-string">"ak"</span> : ak}
+}
+</code></pre><p>Here <code>ek</code> stands for encryption key, and <code>ak</code> stands for auth key, which is used to generate the auth_hash string, which verifies the authenticity of the message (that it hasn&#39;t been tampered with).</p>
+<pre><code>encrypt(message, hexKey) {
+    <span class="hljs-keyword">let</span> keyData = hexKey.toHexadecimalData()
+    <span class="hljs-keyword">let</span> resultData = <span class="hljs-type">AES128CBCEncrypt</span>(message.toData(encoding: utf8), keyData);
+    // encode the <span class="hljs-literal">result</span> <span class="hljs-keyword">in</span> base64
+    <span class="hljs-keyword">return</span> resultData.toBase64String()
+}
+</code></pre><p>AES128CBCEncrypt is the encryption algorithm, which will depend on platform. 128 represents the block size. The parameters used for the AES function are:</p>
+<ul>
+<li>Mode: CBC</li>
+<li>Padding: Pkcs7</li>
+</ul>
+<p>Note that no IV is used, since our keys are random and long enough. If your platform algorithm requires an IV be passed, just pass a blank string, or its data equivalent.</p>
+<p>Next let&#39;s compute the authentication hash:</p>
+<pre><code>computeAuthHash(message, key) {
+    <span class="hljs-keyword">let</span> messageData = message.toData(encoding: utf8)
+    <span class="hljs-keyword">let</span> keyData = hexKey.toHexadecimalData()
+    <span class="hljs-keyword">let</span> <span class="hljs-literal">result</span> = <span class="hljs-type">HMAC256</span>(messageData, keyData)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">result</span>.hexEncodedString()
+}
+</code></pre><p>Here <code>HMAC256</code> is just your platform&#39;s implementation of an HMAC function using SHA256.</p>
+<p>That&#39;s it for saving items. </p>
+<p>Let&#39;s go over decryption for incoming items.</p>
+<p><strong>CryptoHelper</strong></p>
+<pre><code>decryptResponseItems(responseItems) {
+    for item <span class="hljs-keyword">in</span> responseItems {
+        <span class="hljs-keyword">if</span> item[<span class="hljs-string">"deleted"</span>] == <span class="hljs-constant">true</span> {
+            continue
+        }
+
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">contentString =</span> item[<span class="hljs-string">"content"</span>]
+
+        // check <span class="hljs-keyword">if</span> its encrypted - has <span class="hljs-string">"001"</span> prefix
+        <span class="hljs-keyword">if</span> contentString.hasPrefix(<span class="hljs-string">"001"</span>) {
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">keys =</span> self.keysForItem(item[<span class="hljs-string">"enc_item_key"</span>])
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">ek =</span> keys[<span class="hljs-string">"ek"</span>]
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">ak =</span> keys[<span class="hljs-string">"ak"</span>]
+
+            // verify auth hash before decrypting
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">computedAuthHash =</span> HMAC256(contentString.toData(encoding: utf8), ak.toHexadecimalData())
+            <span class="hljs-keyword">if</span> computedAuthHash != item[<span class="hljs-string">"auth_hash"</span>] {
+                print(<span class="hljs-string">"Auth hash does not match, continuing"</span>)
+                continue
+            }
+
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">contentToDecrypt =</span> contentString.substringFrom(<span class="hljs-number">3</span>)
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">decryptedContent =</span> self.decrypt(contentToDecrypt, ek)
+            item[<span class="hljs-string">"content"</span>] = JSON.parse(decryptedContent)
+        } <span class="hljs-keyword">else</span> {
+            // decrypted, but has <span class="hljs-string">"000"</span> prefix
+            // strip out prefix, <span class="hljs-keyword">then</span> decode base64
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">contentToDecode =</span> contentString.substringFrom(<span class="hljs-number">3</span>)
+            item[<span class="hljs-string">"content"</span>] = JSON.parse(Crypto.base64decode(contentToDecode))
+        }    
+    }
+}
+</code></pre><pre><code>decrypt(base64String, hexKey) {
+    <span class="hljs-keyword">let</span> base64Data <span class="hljs-subst">=</span> <span class="hljs-built_in">Data</span>(base64Encoded: base64String)
+    <span class="hljs-keyword">let</span> resultData <span class="hljs-subst">=</span> AES128CBCDecrypt(base64Data, hexKey<span class="hljs-built_in">.</span>toHexadecimalData())
+    <span class="hljs-keyword">let</span> resultString <span class="hljs-subst">=</span> <span class="hljs-built_in">String</span>(<span class="hljs-built_in">data</span>: resultData<span class="hljs-subst">!</span>, encoding: <span class="hljs-built_in">.</span>utf8)
+    <span class="hljs-keyword">return</span> resultString<span class="hljs-subst">!</span>
+}
+</code></pre><p>And that&#39;s it for encryption/decryption.</p>
+<p>Next, let&#39;s merge <code>refreshItems()</code> and <code>saveDirty()</code> into one function called <code>sync()</code>:</p>
+<p><strong>ApiController</strong></p>
+<pre><code>sync() {
+    <span class="hljs-keyword">let</span> <span class="hljs-built_in">request</span> = Restangular.one(<span class="hljs-string">"items/sync"</span>);
+
+    <span class="hljs-keyword">let</span> dirty = ItemManager.sharedInstance.fetchDirty()
+    <span class="hljs-keyword">let</span> itemParams = _map(dirty, <span class="hljs-keyword">function</span>(item){
+        return self.paramsForItem(item);
+    })
+
+    <span class="hljs-built_in">request</span>.items = itemParams;
+
+    <span class="hljs-keyword">if</span>(self.syncToken) {
+        <span class="hljs-built_in">request</span>.syncToken = self.syncToken;
+    }
+
+    <span class="hljs-built_in">request</span>.post().<span class="hljs-keyword">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-built_in">response</span>){
+        self.syncToken = <span class="hljs-built_in">response</span>.sync_token;
+        self.handleResponseItems(<span class="hljs-built_in">response</span>.retrieved_items);
+        self.handleResponseItems(<span class="hljs-built_in">response</span>.saved_items, metadataOnly: <span class="hljs-literal">true</span>)
+    })
+}
+</code></pre><p>Done.</p>
+<h3 id="deleting-an-item">Deleting an item</h3>
+<p><strong>ItemManager</strong></p>
+<pre><code>setItemToBeDeleted(<span class="hljs-property">item</span>) {
+    <span class="hljs-property">item</span>.deleted = <span class="hljs-constant">true</span>
+    <span class="hljs-property">item</span>.dirty = <span class="hljs-constant">true</span>
+}
+</code></pre><p>Then sync.</p>
+<p>After successful sync, delete the item from your local database.</p>
+<h3 id="presentations">Presentations</h3>
+<p>Finally, let&#39;s talk about presentations. An item that is presented means it is public, and should not be encrypted.</p>
+<p>Any item can be shared, or presented, simply by assigning it a <code>presentation_name</code> value. The server decides what the URL for this item would be given a presentation name. </p>
+<p>It is up to the client however to decide which items are related to a presented item, and therefore must also be decrypted.</p>
+<p>For example, if you share a Tag, that Tag must be sent to the server decrypted, but also, any Notes belonging to that tag should also be sent decrypted.</p>
+<p>To handle this logic, we simply define a function on the Item class:</p>
+<p><strong>Item</strong></p>
+<pre><code>isPublic() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.presentationName != <span class="hljs-keyword">nil</span>
+}
+</code></pre><p>Subclasses however should override this function if their definition of public is different. In the case of a Note, it is public if it has a presentation_name, OR if any of the tags it belongs to is public.</p>
+<p><strong>Note</strong></p>
+<pre><code>isPublic() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.isPublic || <span class="hljs-keyword">self</span>.hasOnePublicTag()
+}
+
+hasOnePublicTag() {
+    <span class="hljs-keyword">for</span> tag <span class="hljs-keyword">in</span> <span class="hljs-keyword">self</span>.tags {
+        <span class="hljs-keyword">if</span> tag.isPublic {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
+}
+</code></pre><p>A Note can be public if it belongs to a public Tag, but it can also be public because it is shared individually AND it belongs to a private tag. To make sure you&#39;re displaying the right URL, you can also implement this function on a Note object:</p>
+<p><strong>Note</strong></p>
+<pre><code>isSharedIndividually() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.presentationName != <span class="hljs-keyword">nil</span>
+}
+</code></pre><p>That should be it.</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>Join the <a href="https://slackin-ekhdyygaer.now.sh/">Slack</a> group to discuss implementation questions.</p>
+<p>You can also email <a href="mailto:standardnotes@bitar.io">standardnotes@bitar.io</a> for any questions.</p>
+<p>Check out the source code for other completed clients:</p>
+<p>iOS: <a href="">https://github.com/standardnotes/iOS</a></p>
+<p>Web: <a href="">https://github.com/standardnotes/web</a></p>
+<p>For reference, you can also see the source for a standard Standard File server: 
+<a href="">https://github.com/standardfile/ruby-server</a></p>
+<p>Follow <a href="https://twitter.com/standardnotes">@standardnotes</a> for updates and announcements.</p>
+
+  </body>
+</html>

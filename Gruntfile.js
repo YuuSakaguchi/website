@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 
       markdown: {
         files: ['app/assets/doc/**/*.md'],
-        tasks: ['markdown', 'ngtemplates', 'concat'],
+        tasks: ['markdown', 'ngtemplates', 'concat', 'ngAnnotate'],
         options: {
           spawn: false,
         },

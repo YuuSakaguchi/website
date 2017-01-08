@@ -60,7 +60,7 @@ To keep the core application as simple and as uncluttered as possible, Standard 
 
 For example, you may want your notes and tags to be synced to your Dropbox for added redundancy and peace of mind. Extensions make this really easy.
 
-For a list of available extensions, see [extensions](https://standardnotes.org/extensions).
+For a list of available extensions, see [extensions](/extensions).
 
 # Open Source
 All Standard Notes apps are [open source](https://github.com/standardnotes). This means anyone can inspect the code and make sure it's not doing anything you wouldn't want it to do. And because the Standard Note format is openly published, anyone can build their own Standard Notes app. This means that you're not locked in to using our own suite of Standard Notes applications. This also means the lifetime of your notes is not limited by the lifetime of the Standard Notes application suite.

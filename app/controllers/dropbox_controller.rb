@@ -21,7 +21,7 @@ class DropboxController < ApplicationController
       {
         :label => "Auto-push changes",
         :desc => "Pushes item changes to Dropbox folder.",
-        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/push?key=#{key}",
+        :url => "#{ENV['HOST']}/ext/dropbox/#{@user.uuid}/push?key=#{key}",
         :verb => "post",
         :repeat_mode => "watch",
         :repeat_timeout => 7,
@@ -34,7 +34,7 @@ class DropboxController < ApplicationController
       {
         :label => "Perform initial sync",
         :desc => "Syncs all your current items. This can take several minutes, depending on how many items you have.",
-        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/initial_sync?key=#{key}",
+        :url => "#{ENV['HOST']}/ext/dropbox/#{@user.uuid}/initial_sync?key=#{key}",
         :verb => "post",
         :context => "global",
         :content_types => ["*"],
@@ -46,7 +46,7 @@ class DropboxController < ApplicationController
       {
         :label => "Save to Dropbox",
         :desc => "Syncs this item to Dropbox.",
-        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/push_one?key=#{key}",
+        :url => "#{ENV['HOST']}/ext/dropbox/#{@user.uuid}/push_one?key=#{key}",
         :verb => "post",
         :context => "Item",
         :content_types => ["*"],
@@ -57,7 +57,7 @@ class DropboxController < ApplicationController
       {
         :label => "Download import file",
         :desc => "Downloads import file in standard format.",
-        :url => "http://localhost:3002/ext/dropbox/#{@user.uuid}/download?key=#{key}",
+        :url => "#{ENV['HOST']}/ext/dropbox/#{@user.uuid}/download?key=#{key}",
         :context => "global",
         :verb => "show"
       }
@@ -134,7 +134,7 @@ class DropboxController < ApplicationController
       :grant_type => "authorization_code",
       :client_id => ENV["DROPBOX_CLIENT_ID"],
       :client_secret => ENV["DROPBOX_CLIENT_SECRET"],
-      :redirect_uri => "http://localhost:3002/dropbox_redirect"
+      :redirect_uri => "#{ENV['HOST']}/dropbox_redirect"
       }
 
     resp = HTTP.headers(content_type: 'application/json').post(url, :params => request_params)
@@ -147,18 +147,14 @@ class DropboxController < ApplicationController
 
       # encrypt token before storing. do not save key.
       # return key to user for safe storing
-
       dropbox_token = data["access_token"]
       key = EncryptionHelper.generate_random_key
       encrypted_token = EncryptionHelper.encrypt(dropbox_token, key)
 
-      puts "Token: #{dropbox_token}"
-      puts "Encrypted token: #{encrypted_token}"
-
       @user.enc_dropbox_token = encrypted_token
       @user.save!
 
-      @secret_url = "http://localhost:3002/ext/dropbox/#{@user.uuid}?key=#{key}"
+      @secret_url = "#{ENV['HOST']}/ext/dropbox/#{@user.uuid}?key=#{key}"
       redirect_to "/extensions/dropbox?secret_url=#{@secret_url}"
     end
 

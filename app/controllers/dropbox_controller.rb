@@ -78,10 +78,13 @@ class DropboxController < ApplicationController
 
   def push
     items = params[:items]
+    auth_params = params[:auth_params]
 
     # write individual files
     items.each do |item|
-      dropbox.upload("/#{item[:uuid]}.txt", "#{JSON.pretty_generate(item.as_json)}", {:mode => "overwrite"})
+      payload = { "items" => [item]}
+      payload["auth_params"] = auth_params if auth_params != nil
+      dropbox.upload("/#{item[:uuid]}.txt", "#{JSON.pretty_generate(payload.as_json)}", {:mode => "overwrite"})
     end
 
     # write to master file
@@ -101,6 +104,8 @@ class DropboxController < ApplicationController
         contents["items"].push(item.to_unsafe_h)
       end
     end
+
+    contents["auth_params"] = auth_params if auth_params != nil
 
     dropbox.upload("/master.txt", JSON.pretty_generate(contents.as_json), {:mode => "overwrite"})
 

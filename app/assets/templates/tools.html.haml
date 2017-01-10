@@ -1,7 +1,17 @@
 %section.main-content
-  %h1 Import Tools for Standard Notes
+  %h1 Tools for Standard Notes
 
-  %p Extensions allow you to plug 3rd party services into your Standard Notes experience.
+  %p The tools below allow you to convert between data formats. These tools are fully offline and do not require an internet connection. This means none of your data is sent over the wire.
 
+  %h2 Evernote to Standard Notes Converter
+  %p
+    Choose an Evernote ENEX file to convert to Standard Notes format. For instructions on how to export from Evernote, see
+    %a{"href" => "https://help.evernote.com/hc/en-us/articles/209005557-How-to-back-up-export-and-restore-import-notes-and-notebooks", "target" => "_blank"} here.
+  %label#import-archive
+    %input{"type" => "file", "style" => "", "file-change" => "->", "handler" => "importEvernoteFileSelected(files)"}
+  %p{"ng-if" => "evernoteConversionComplete"}
+    Your Standard Notes import file is now downloading. Use the Standard Notes
+    %a{"href" => "https://app.standardnotes.org", "target" => "_blank"} web app
+    to import your newly converted notes.
   .footer
     %hr

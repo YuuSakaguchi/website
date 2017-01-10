@@ -39,7 +39,7 @@ angular.module('app.main')
       })
 
       .state('tools', {
-        url: '/import',
+        url: '/tools',
         views: {
           'content@' : {
             templateUrl: 'templates/tools.html',

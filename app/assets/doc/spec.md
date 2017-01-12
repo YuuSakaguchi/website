@@ -9,7 +9,7 @@ Standard Notes is a basic notes app that delivers only the essentials in note ta
 
 - **A standard data format that allows portability and an extended lifetime**. The more complex and custom a notes app becomes, the more likely your data becomes locked in to that platform, and the more buggy and laggy the application becomes. Because Standard Notes focuses on the "standard" format of a note, this data format, along with respective user-facing applications, are easy to maintain, and can exist for decades without issue. This means a less nomadic lifestyle for note takers.
 - **A set of cross platform applications that don't deteriorate over time**. Simply put, applications that are simple are simpler to maintain. Applications that aim to survive an apocalypse must adapt to a different style. Because of this focus on durability, you won't be forced to switch over to a new system every time developers of your favorite notes app decide to change everything around or just completely abandon the project. And because the data format is built on top of the [Standard File](https://standardfile.org) format, your Standard Notes data can be used with any app that supports your Standard File account.
-- **High security and privacy**. Because Standard Notes uses the Standard File format, all your notes are encrypted on your device before being sent over the wire. This means that even if the server was hacked and all your data was stolen, the attacker would only see gibberish - only you can decrypt your notes with your password key.
+- **High security and privacy**. Because Standard Notes uses the Standard File format, all your notes are encrypted on your device before being sent over the wire. This means that even if the server was hacked and all your data was stolen, the attacker would only see gibberish - only you can decrypt your notes with your password key. Also, Standard Notes does not use any analytics services and will never require you to agree to any Terms of Service.
 
 ## What makes the cut for note "basics"?
 
@@ -86,6 +86,15 @@ Tag structures have the following properties:
 | name | type | description |
 | --- | --- | --- |
 | title | String | The title of the tag. |
+
+# Technical FAQ
+**What information does Standard Notes collect about me?**
+<br>
+As little as possible, if at all. Our apps do not use any data analytics libraries like Google Analytics, which help track your behavior and present you with more relevant advertisements. Instead, we plan to do things the old fashioned way: opt-in email surveys, which we hope you'll respond to. Surveys will ensure we're building the right thing and help us understand how people are using the Standard Notes apps.
+
+(At present one small exception exists, which is Crashlytics for the Standard Notes iOS app. This tool helps us understand when and why the app crashes. We plan to remove this as soon as we're confident of the app's stability.)
+
+In addition, Standard Notes will never require you to agree to a lengthy terms of conditions.
 
 # FAQ
 

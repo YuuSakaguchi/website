@@ -113,7 +113,6 @@ class DropboxController < ApplicationController
   end
 
   def push_one
-    params[:items] = [params[:item]]
     self.push
   end
 

@@ -58,6 +58,13 @@ You'll enter this server information inside the Standard Notes application. You'
 
 To keep the core application as simple and as uncluttered as possible, Standard Notes allows for the installation of arbitrary extensions. These extensions are URL based, and anyone can build an extension.
 
+Extensions are simple yet extremely powerful. Extensions allow for things like:
+- 3rd party data sync
+- Revision control
+- Publishing your notes to your blog
+
+All of this and more is possible with extensions.
+
 For example, you may want your notes and tags to be synced to your Dropbox for added redundancy and peace of mind. Extensions make this really easy.
 
 For a list of available extensions, see [extensions](/extensions).

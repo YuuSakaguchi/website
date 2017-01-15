@@ -37,10 +37,10 @@ The basic form of a note is timeless: it has existed since the invention of pape
 To get started, download a Standard Notes app for your platform.
 
 - [Web](https://app.standardnotes.org)
-- [iOS](https://github.com/standardnotes/iOS)
-- [Mac](https://github.com/standardnotes/electron/releases/download/v0.1.0/Standard.Notes-Mac-0.1.0.dmg)
-- [Windows](https://github.com/standardnotes/electron/releases/download/v0.1.0/Standard.Notes.WindowsSetup.0.1.0.exe)
-- [Linux](https://github.com/standardnotes/electron/releases/download/v0.1.0/standard-notes-linux-0.1.0-x86_64.AppImage)
+- [iOS](https://itunes.apple.com/us/app/id1191215138?mt=8)
+- [Mac](https://github.com/standardnotes/desktop/releases/download/v0.1.1/Standard.Notes-Mac-0.1.1.dmg)
+- [Windows](https://github.com/standardnotes/desktop/releases/download/v0.1.1/Standard.Notes.Windows.0.1.1.zip)
+- [Linux](https://github.com/standardnotes/desktop/releases/download/v0.1.1/Standard-Notes-Linux-0.1.1-x86_64.AppImage)
 - Android (In development)
 
 Then, choose a Standard File server to host your data:

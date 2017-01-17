@@ -23,8 +23,7 @@ The basic form of a note is timeless: it has existed since the invention of pape
 
 **Standard Notes also makes some modernization updates to bring the timeless note format into the modern age:**
 
-- the ability to share a note by generating a link to it
-- the ability to share a group of notes by generating a link to the group (this means you can share notes tagged "blog" to quickly create an online publication just based off your notes)
+- custom extensions that allow 3rd party functionality, like [Dropbox Sync](https://standardnotes.org/extensions) or [Publish to Blog](https://standardnotes.org/extensions)
 - a Markdown supported editor
 
 **And because data portability and durability are of utmost importance, all Standard Notes clients support:**

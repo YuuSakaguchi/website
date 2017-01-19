@@ -75,6 +75,9 @@ All Standard Notes apps are [open source](https://github.com/standardnotes). Thi
 
 It's not something we consider often, but odds are, you as a human will outlive most of the private services you rely on today to manage your data. By building on top of a more open format, Standard Notes users don't have to worry about what would happen if Standard Notes got run over by a bus.
 
+## Developers
+If you're a developer, see [Standard Notes Developer Resources](/developers).
+
 # The Standard Notes format
 The data format for Standard Notes is dead simple, and relies on two main "structures", Notes and Tags. A structure is defined by the Standard File format [here](https://standardfile.org/#models). The Note and Tag structures below are custom to Standard Notes, however, we propose that anyone building a notes app on top of Standard File use or build on this same structure.
 
@@ -117,6 +120,8 @@ What makes software difficult to maintain is a growing feature set that constant
 **How can I get involved?**
 <br>
 We love community contributions. If you're a notes-enthusiast, share with your friends and followers, and help create a more sustainable notes environment. If you're a developer, check out our [repositories](https://github.com/standardnotes) on Github and see where you can help. You can also host your own Standard File server for other community members to use and join. If you launch your own community server, [let us know](mailto:standardnotes@bitar.io).
+
+If you're a developer, see the [Developer Resources](/developers) pages.
 
 You can also join the [Standard Notes Slack group](https://slackin-ekhdyygaer.now.sh/) to get involved.
 

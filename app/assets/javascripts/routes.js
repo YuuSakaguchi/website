@@ -48,6 +48,15 @@ angular.module('app.main')
         }
       })
 
+      .state('developers', {
+        url: '/developers',
+        views: {
+          'content@' : {
+            templateUrl: 'templates/developers.html'
+          }
+        }
+      })
+
       // 404 Error
       .state('404', {
         parent: 'base',

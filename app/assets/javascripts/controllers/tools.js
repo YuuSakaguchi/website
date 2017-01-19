@@ -7,11 +7,16 @@ class ToolsCtrl {
 
       reader.onload = function(e) {
         var data = e.target.result;
-        var sndata = SNTools.convertENEXDatatoSN(data);
-        SNTools.downloadSNData(sndata, "evernote-to-sn.txt");
-        $timeout(function(){
-          $scope.evernoteConversionComplete = true;
-        })
+        try {
+          var sndata = SNTools.convertENEXDatatoSN(data);
+          SNTools.downloadSNData(sndata, "evernote-to-sn.txt");
+          $timeout(function(){
+            $scope.evernoteConversionComplete = true;
+          })
+        } catch (e) {
+          console.log("Error: ", e);
+          alert("There was an error processing your file. Please submit your console output to sn@bitar.io.");
+        }
       }
       reader.readAsText(file);
     }

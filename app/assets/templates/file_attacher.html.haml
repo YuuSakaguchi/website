@@ -25,3 +25,10 @@
     %form{"ng-if" => "loginData.showLogin", "ng-submit" => "submitLogin()"}
       %input{"type" => "text", "ng-model" => "loginData.secretUrl", "placeholder" => "Enter secret URL"}
       %button{"type" => "submit"} Submit
+
+  %h2 FAQ
+  %p
+    %strong Where are my files stored?
+  %p
+    This extension connects with a storage provider of your choosing, like Dropbox, Google Drive, or S3 (currently only Dropbox is available).
+    Uploaded files are stored with your storage provider.

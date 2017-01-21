@@ -38,15 +38,7 @@ class FileAttacherController < ApplicationController
         :verb => "show",
         :context => "Item",
         :content_types => ["Note"]
-      },
-      # {
-      #   :label => "Show attached files",
-      #   :desc => "",
-      #   :url => "#{ENV['HOST']}/ext/file_attacher/#{@user.uuid}/files?key=#{key}&item_uuid=#{item_uuid}",
-      #   :verb => "show",
-      #   :context => "Item",
-      #   :content_types => ["Note"]
-      # }
+      }
     ]
 
     if item_uuid != nil
@@ -62,6 +54,17 @@ class FileAttacherController < ApplicationController
             :content_types => ["Note"]
           }
           actions.push(action)
+        end
+
+        if files.length > 0
+          actions.push({
+            :label => "Manage attachments",
+            :desc => "",
+            :url => "#{ENV['HOST']}/ext/file_attacher/#{@user.uuid}/files?key=#{key}&item_uuid=#{item_uuid}",
+            :verb => "show",
+            :context => "Item",
+            :content_types => ["Note"]
+            })
         end
       rescue
         # no files found
@@ -96,7 +99,11 @@ class FileAttacherController < ApplicationController
 
   def files
     item_uuid = params[:item_uuid]
-    @files = dropbox.list_folder("/file_attacher/#{item_uuid}")
+    begin
+      @files = dropbox.list_folder("/file_attacher/#{item_uuid}")
+    rescue
+      @files = []
+    end
   end
 
   def download

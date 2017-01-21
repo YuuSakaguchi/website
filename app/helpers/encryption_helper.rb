@@ -29,4 +29,8 @@ module EncryptionHelper
     plain
   end
 
+  def self.sha256(string)
+    Digest::SHA256.hexdigest(string)
+  end
+
 end

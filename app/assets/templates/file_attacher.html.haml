@@ -1,0 +1,27 @@
+%section.main-content
+  %h1 File Attacher extension for Standard Notes.
+
+  %div{"ng-if" => "error"}
+    There was an error linking your Dropbox. Please try again.
+
+  %div{"ng-if" => "secretUrl"}
+    %p
+      Your secret URL is:
+      %strong {{secretUrl}}
+
+    %p Enter this URL in apps that support Standard File extensions.
+
+    %p{"ng-if" => "!user.dropbox_linked"}
+      %a{"href" => "{{dropboxLink}}"} Link Dropbox
+    %p{"ng-if" => "user.dropbox_linked"}
+      Dropbox is linked
+
+  %div{"ng-if" => "!secretUrl"}
+    %p
+      %a{"href" => "ext/file_attacher/register", "target" => "_self"} Register
+    %p
+      %a{"ng-click" => "loginData.showLogin = !loginData.showLogin"} Login
+
+    %form{"ng-if" => "loginData.showLogin", "ng-submit" => "submitLogin()"}
+      %input{"type" => "text", "ng-model" => "loginData.secretUrl", "placeholder" => "Enter secret URL"}
+      %button{"type" => "submit"} Submit

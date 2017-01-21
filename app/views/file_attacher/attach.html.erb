@@ -1,0 +1,6 @@
+<%= form_tag({action: :upload}, multipart: true) do |f| %>
+  <%= file_field_tag 'file' %>
+  <%= hidden_field_tag :key , params[:key] %>
+  <%= hidden_field_tag :item_uuid , params[:item_uuid] %>
+  <%= submit_tag 'Upload' %>
+<% end %>

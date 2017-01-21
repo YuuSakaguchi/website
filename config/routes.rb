@@ -11,7 +11,11 @@ Rails.application.routes.draw do
 
   # file attacher ext
   get "ext/file_attacher/register" => "file_attacher#register"
-  # get "fa_dropbox_redirect" => "file_attacher#dropbox_auth_complete"
+  get "ext/file_attacher/:user_uuid" => "file_attacher#show"
+  get "ext/file_attacher/:user_uuid/attach" => "file_attacher#attach"
+  get "ext/file_attacher/:user_uuid/files" => "file_attacher#files", :as => "files"
+  post "ext/file_attacher/:user_uuid/upload" => "file_attacher#upload"
+  get "ext/file_attacher/:user_uuid/download" => "file_attacher#download"
 
   get "api/users/:uuid" => "users#show"
   patch "api/users/:uuid" => "users#update"

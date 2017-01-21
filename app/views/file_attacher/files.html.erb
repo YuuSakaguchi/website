@@ -1,0 +1,4 @@
+<% @files.each do |file| %>
+  <%= file.name %>
+  <%= button_to "Download", {:controller => "file_attacher", :action => "download"}, params: {:file_path => file.path_lower, :key=> params[:key]}, :method => :get  %>
+<% end %>

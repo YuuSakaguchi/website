@@ -1,0 +1,108 @@
+#files {
+  font-family: sans-serif;
+  margin: 20px;
+
+  .file {
+    padding: 10px;
+    margin-bottom: 0px;
+
+    .name {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .file-button-wrapper {
+      display: inline-block;
+    }
+
+    .file-button {
+      background-color: black;
+      color: white;
+      padding: 6px 10px;
+      cursor: pointer;
+      border: none;
+      text-align: left;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+#drop-container {
+  border: 2px dashed black;
+  height:100px;
+  width: 100%;
+
+  .uploading {
+    display: none;
+  }
+
+  &.is-dragover {
+    background-color: rgba(gray, 0.25);
+    cursor: crosshair;
+  }
+
+  &.is-uploading {
+    .uploading {
+      display: block;
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .instructions-label {
+      display: none;
+    }
+  }
+}
+
+#file-attacher-form {
+
+  height: 100%;
+
+  .instructions-label {
+    position: absolute;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 15px;
+    height: 100%;
+    float: left;
+    width: 100%;
+  }
+
+  .file-input-wrapper {
+    // width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100px;
+    color: black;
+
+    margin-bottom: 0;
+
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+
+    touch-action: manipulation;
+    cursor: pointer;
+
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+  }
+
+  .file-input {
+    display: none;
+  }
+
+}

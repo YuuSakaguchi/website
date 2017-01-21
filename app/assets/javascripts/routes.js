@@ -29,11 +29,20 @@ angular.module('app.main')
 
       .state('extensions.dropbox', {
         url: '/dropbox?secret_url',
-
         views: {
           'content@' : {
             templateUrl: 'templates/dropbox.html',
             controller: 'DropboxCtrl'
+          }
+        }
+      })
+
+      .state('extensions.file_attacher', {
+        url: '/file_attacher?secret_url&uuid',
+        views: {
+          'content@' : {
+            templateUrl: 'templates/file_attacher.html',
+            controller: 'FileAttacherCtrl'
           }
         }
       })

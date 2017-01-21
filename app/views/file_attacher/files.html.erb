@@ -1,0 +1,18 @@
+<div id="files">
+  <h1>Files</h1>
+  <ol>
+    <% @files.each do |file| %>
+      <li class="file">
+        <p class="name"><%= file.name %></p>
+
+        <div class="file-button-wrapper">
+          <%= button_to "Download", {:controller => "file_attacher", :action => "download"}, {:class => "file-button", :method => :get, params: {:file_path => file.path_lower, :key=> params[:key]}} %>
+        </div>
+
+        <div class="file-button-wrapper">
+          <%= button_to "Delete", {:controller => "file_attacher", :action => "delete"}, {:class => "file-button", :method => :delete, params: {:file_path => file.path_lower, :item_uuid => params[:item_uuid], :key=> params[:key]}} %>
+        </div>
+      </li>
+    <% end %>
+  </ol>
+</div>

@@ -1,6 +1,7 @@
 class DropboxController < ApplicationController
 
   include EncryptionHelper
+  include DropboxHelper
 
   before_action {
     if params[:user_uuid]
@@ -125,42 +126,21 @@ class DropboxController < ApplicationController
     send_data body.to_s, filename: "dropbox-notes.txt"
   end
 
-
   def dropbox_auth_complete
     @user = User.new
     code = params[:code]
 
-    require 'dropbox'
-
-    url = "https://api.dropboxapi.com/1/oauth2/token"
-    request_params = {
-      :code => code,
-      :grant_type => "authorization_code",
-      :client_id => ENV["DROPBOX_CLIENT_ID"],
-      :client_secret => ENV["DROPBOX_CLIENT_SECRET"],
-      :redirect_uri => "#{ENV['HOST']}/dropbox_redirect"
-      }
-
-    resp = HTTP.headers(content_type: 'application/json').post(url, :params => request_params)
-
-    if resp.code != 200
-      @error = "Unable to authenticate. Please try again."
+    result = DropboxHelper.get_access_key(code, "dropbox_redirect")
+    if result[:error]
       redirect_to "/extensions/dropbox?secret_url=error"
     else
-      data = JSON.parse(resp.to_s)
-
-      # encrypt token before storing. do not save key.
-      # return key to user for safe storing
-      dropbox_token = data["access_token"]
-      key = EncryptionHelper.generate_random_key
-      encrypted_token = EncryptionHelper.encrypt(dropbox_token, key)
-
-      @user.enc_dropbox_token = encrypted_token
+      @user.enc_dropbox_token = result[:encrypted_token]
       @user.save!
 
+      key = result[:key]
       @secret_url = "#{ENV['HOST']}/ext/dropbox/#{@user.uuid}?key=#{key}"
       redirect_to "/extensions/dropbox?secret_url=#{@secret_url}"
     end
-
   end
+
 end

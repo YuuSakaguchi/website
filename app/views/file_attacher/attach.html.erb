@@ -1,6 +1,17 @@
-<%= form_tag({action: :upload}, multipart: true) do |f| %>
-  <%= file_field_tag 'file' %>
-  <%= hidden_field_tag :key , params[:key] %>
-  <%= hidden_field_tag :item_uuid , params[:item_uuid] %>
-  <%= submit_tag 'Upload' %>
-<% end %>
+<div id="drop-container">
+
+  <%= form_tag({action: :upload}, {:id => "file-attacher-form", multipart: true}) do |f| %>
+
+    <label class="file-input-wrapper">
+      <div class="instructions-label"><strong>Drag and Drop</strong> or Click to Select File</div>
+      <%= file_field_tag 'file', :id => "file-input", :class => "file-input" %>
+    </label>
+
+    <div class="uploading">Uploading...</div>
+
+    <%= hidden_field_tag :key , params[:key] %>
+    <%= hidden_field_tag :item_uuid , params[:item_uuid] %>
+
+  <% end %>
+
+</div>

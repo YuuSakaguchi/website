@@ -18,7 +18,7 @@ class FileAttacherCtrl {
     }
 
     $scope.didSetUser = function() {
-      $scope.dropboxLink = $rootScope.getDropboxLink("extensions/file_attacher", $scope.user.uuid);
+      $scope.dropboxLink = $rootScope.getDropboxLink("extensions/file_attacher", "token", $scope.user.uuid);
     }
 
     var location = window.location.href;

@@ -118,7 +118,8 @@ module.exports = function(grunt) {
            'vendor/assets/bower_components/moment/min/moment.min.js',
            'vendor/assets/bower_components/sntools/dist/sntools.min.js',
            'vendor/assets/bower_components/lodash/dist/lodash.min.js',
-           'vendor/assets/bower_components/restangular/dist/restangular.js'
+           'vendor/assets/bower_components/restangular/dist/restangular.js',
+           'vendor/assets/bower_components/dropzone/dist/min/dropzone.min.js'
          ],
          dest: 'vendor/assets/javascripts/lib.js',
        },

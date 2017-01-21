@@ -83,6 +83,9 @@ class FileAttacherController < ApplicationController
   end
 
   def attach
+    respond_to do |format|
+      format.html
+    end
   end
 
   def upload
@@ -99,6 +102,11 @@ class FileAttacherController < ApplicationController
   def download
     file, body = dropbox.download("#{params[:file_path]}")
     send_data body.to_s, filename: file.name
+  end
+
+  def delete
+    dropbox.delete("#{params[:file_path]}")
+    redirect_to files_path(request.parameters)
   end
 
 end

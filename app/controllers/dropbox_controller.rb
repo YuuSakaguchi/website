@@ -1,6 +1,7 @@
 class DropboxController < ApplicationController
 
   include EncryptionHelper
+  include DropboxHelper
 
   before_action {
     if params[:user_uuid]
@@ -128,8 +129,6 @@ class DropboxController < ApplicationController
   def dropbox_auth_complete
     @user = User.new
     code = params[:code]
-
-    include DropboxHelper
 
     result = DropboxHelper.get_access_key(code, "dropbox_redirect")
     if result[:error]

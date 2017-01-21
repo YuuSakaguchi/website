@@ -2,14 +2,27 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   after_action :set_csrf_cookie
 
-  layout :false
+  layout :resolve_layout
 
   def main
     set_app_domain
   end
 
   rescue_from ActionView::MissingTemplate do |exception|
+
   end
+
+  private
+
+  def resolve_layout
+     case action_name
+     when "main"
+       false
+     else
+       "application"
+     end
+  end
+
   protected
 
   def set_app_domain

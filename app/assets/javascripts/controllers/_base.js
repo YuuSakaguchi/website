@@ -5,11 +5,11 @@ class BaseCtrl {
       return location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
     }
 
-    $rootScope.getDropboxLink = function(redirect, state) {
+    $rootScope.getDropboxLink = function(redirect, type, state) {
       var clientId = "7wzjlm5ap227jw7";
       var host = $rootScope.baseUrl();
       var absoluteRedirect = host + "/" + redirect;
-      var url = "https://www.dropbox.com/1/oauth2/authorize?client_id=" + clientId + "&response_type=token&redirect_uri=" + absoluteRedirect;
+      var url = "https://www.dropbox.com/1/oauth2/authorize?client_id=" + clientId + "&response_type=" + type + "&redirect_uri=" + absoluteRedirect;
       if(state) {
         url += "&state=" + state;
       }

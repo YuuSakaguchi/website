@@ -13,7 +13,6 @@ class FileAttacherCtrl {
         sessionStorage.setItem("fa_key", key);
         $scope.user = response.plain();
         $scope.didSetUser();
-        console.log(response);
       })
     }
 
@@ -27,15 +26,12 @@ class FileAttacherCtrl {
       var key = sessionStorage.getItem("fa_key");
       var queryString = location.substring(location.indexOf("#"), location.length);
       var query = parseQuery(queryString);
-      console.log(queryString, query);
       var dropboxAccessToken = query["access_token"];
-      console.log(dropboxAccessToken);
       var uuid = query["state"];
 
       var request = Restangular.one("users", uuid);
       _.merge(request, {dropbox_token : dropboxAccessToken, key : key});
       request.patch().then(function(response){
-        console.log(response);
         window.location.href = `/extensions/file_attacher?secret_url=${$rootScope.baseUrl()}/ext/file_attacher/${uuid}?key=${key}`;
       })
 

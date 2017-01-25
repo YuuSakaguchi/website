@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.0.0.1'
+gem 'rails', '5.0.1'
 gem 'mysql2', '>= 0.3.13', '< 0.5'
 
 gem 'dropbox-sdk-v2'
@@ -9,6 +9,9 @@ gem 'dropbox-sdk-v2'
 gem 'sass'
 
 gem "non-stupid-digest-assets"
+
+gem 'standard-file', path: '/Users/mobitar/Desktop/standard_file_gem', require: 'standard_file'
+gem 'dropbox-sync', path: '/Users/mobitar/Desktop/dropbox_sync', require: 'dropbox_sync'
 
 gem 'uglifier'
 

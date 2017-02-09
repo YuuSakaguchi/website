@@ -10,7 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170121015949) do
+ActiveRecord::Schema.define(version: 20170208154140) do
+
+  create_table "dropbox_sync_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "uuid"
+    t.string   "user_uuid"
+    t.boolean  "deleted",    default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "dropbox_sync_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "uuid"
+    t.string   "hashed_key"
+    t.string   "enc_dropbox_token"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "subscriptions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "stripe_id"
+    t.string   "stripe_name"
+    t.string   "user_stripe_id"
+    t.string   "user_email"
+    t.string   "user_name"
+    t.string   "user_website"
+    t.boolean  "anon_contrib"
+    t.string   "payment_type"
+    t.datetime "active_until"
+    t.boolean  "canceled",       default: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.index ["user_stripe_id"], name: "index_subscriptions_on_user_stripe_id", unique: true, using: :btree
+  end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"

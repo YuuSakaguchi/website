@@ -1,15 +1,32 @@
 $blue-color: #1e6bb8;
 
 * {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 body {
   padding: 0;
   margin: 0;
-  // font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #2e2e2e; }
+  color: #2e2e2e;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+table {
+ border-collapse: collapse;
+ border-spacing: 0;
+}
+
+td,
+th {
+ padding: 0;
+}
 
 a {
   color: $blue-color;
@@ -24,25 +41,45 @@ h4 {
   font-weight: bold !important;
 }
 
-  a:hover {
-    text-decoration: underline;
- }
+button {
+  border: none;
+  &.black {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+    min-width: 200px;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
 
- .condensed {
-   line-height: 10px;
- }
+.block {
+  display: block;
+}
 
- .small {
-   font-size: 15px;
- }
+a:hover {
+  text-decoration: underline;
+}
 
- .faded {
-   opacity: 0.5;
- }
+.condensed {
+ line-height: 10px;
+}
 
- .strong {
-   font-weight: bold;
- }
+.small {
+ font-size: 15px;
+}
+
+.faded {
+ opacity: 0.5;
+}
+
+.strong {
+ font-weight: bold;
+}
 
 .header {
   margin-bottom: 80px;
@@ -62,7 +99,7 @@ h4 {
   font-weight: normal;
   font-size: 24px;
   max-width: 700px;
- }
+}
 
 
 .main-content :first-child {
@@ -181,27 +218,3 @@ h4 {
   .main-content {
     padding: 2rem 1rem;
     font-size: 1rem; } }
-
-.site-footer {
-  padding-top: 2rem;
-  margin-top: 2rem;
-  border-top: solid 1px #eff0f1; }
-
-.site-footer-owner {
-  display: block;
-  font-weight: bold; }
-
-.site-footer-credits {
-  color: #819198; }
-
-@media screen and (min-width: 64em) {
-  .site-footer {
-    font-size: 1rem; } }
-
-@media screen and (min-width: 42em) and (max-width: 64em) {
-  .site-footer {
-    font-size: 1rem; } }
-
-@media screen and (max-width: 42em) {
-  .site-footer {
-    font-size: 0.9rem; } }

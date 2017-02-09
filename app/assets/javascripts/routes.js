@@ -66,6 +66,16 @@ angular.module('app.main')
         }
       })
 
+      .state('producers', {
+        url: '/producers',
+        views: {
+          'content@' : {
+            templateUrl: 'templates/producers.html',
+            controller: 'ProducersCtrl'
+          }
+        }
+      })
+
       // 404 Error
       .state('404', {
         parent: 'base',

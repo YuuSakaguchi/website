@@ -1,0 +1,11 @@
+%p Standard Notes would not be possible without the contributions of these individuals, and we are eternally grateful for their support.
+
+%p.strong Executive Producers
+%a{"ng-repeat" => "producer in executiveProducers", "href" => "{{producer.link}}", "target" => "_blank"}
+  {{producer.name + ($index < executiveProducers.length - 1 ? "," : "")}}
+
+%p.strong Producers
+%a{"ng-repeat" => "producer in producers", "href" => "{{producer.link}}", "target" => "_blank"}
+  {{producer.name + ($index < producers.length - 1 ? "," : "")}}
+
+%p ...and other contributors who prefered to remain anonymous.

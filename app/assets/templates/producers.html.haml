@@ -1,0 +1,74 @@
+%section.main-content
+  %h1 Producers & Contributors
+  %p
+    Standard Notes aims to be a small company, not a venture capitalized company. This means our only obligation is to our users, and not to ever-demanding shareholders.
+  %p
+    Because Standard Notes aims to always be small, our costs can remain relatively low compared to typical software companies. However, capital is the lifeblood of any organization, and we are no exception.
+  %p
+    Rather than create artificial roadblocks in your app experience that prompt you to pay to continue, we want to make your note experience <i>yours</i>, and not get in the way.
+    To do that, we want to try something different.
+
+  %h2 Producers Program
+  %p
+    Without the contributions of the community, whether it be through open-source contributions, sharing the product, or capital contributions, Standard Notes would not exist.
+    Anyone who contributes to Standard Notes then is really a producer of the app, the same way a movie could not exist without producers. Producers are what make Standard Notes possible.
+
+  %p
+    By becoming a producer, you are helping Standard Notes stick around for the long run.
+    You are helping to ensure a great experience on every platform, and although we aim for simplicity, this is still no easy feat.
+    Your contributions also help pay for the servers that make Standard Notes and Standard File go.
+
+  %p
+    Lastly, Standard Notes and Standard File are more than just software products. They are philosophies, ideas, and manifestos.
+    They are the idea that data belongs to us, and not companies;
+    the philosophy that software should strive for longevity, not growth-at-all-costs;
+    the manifesto that encryption should come standard, and that privacy is a right that needs no justification.
+
+  %p Even when and if Standard Notes the app ceases to exist some distant day into the future, the data standard, protocol, ideas, and philosophy behind these products will always exist, and thus your data is forever safe, forever yours.
+
+  %h1 Becoming a Producer
+  %p A producer is someone who helps Standard Notes sustain and advance. There are three ways you can contribute:
+  %ul
+    %li <strong>Capital</strong>: become a producer with a contribution of $9/year.
+    %li <strong>Resource</strong>: contribute to the open-source projects.
+    %li <strong>Advocacy</strong>: be an advocate for Standard Notes on the web.
+
+  %p Someone who contributes two or more out of the three (capital, resource, and advocacy) is an Executive Producer.
+
+  %p
+    To become a Producer as a capital contributor for $9/year,
+    %a{"ng-click" => "showJoin = !showJoin"} click here.
+  %div{"ng-if" => "showJoin", "style" => "border: 1px solid black; padding: 15px;"}
+    %p.strong Thank you for your interest in joining the Producer program.
+    %p The Producer program is billed annually at $9/year, and can be canceled at any time. (Bitcoin users will only be billed once, but we encourage you to come back to renew.)
+    %p Producers are mentioned on the homepage of our website for their support, along with a link to a website of their choosing (typically their Twitter profile or personal website).
+    %p If you'd like your contribution to remain anonymous, choose this option below.
+    %form.center.center-align.mt-20{"ng-if" => "!formData.processing && !formData.success"}
+      %input{"type" => "text", "placeholder" => "Name", "ng-model" => "formData.name"}
+      %input{"type" => "text", "placeholder" => "Email", "ng-model" => "formData.email"}
+      %input{"type" => "text", "placeholder" => "Your website/link", "ng-model" => "formData.website"}
+
+      %label.medium.block
+        %input{"type" => "checkbox", "ng-model" => "formData.anon"}
+        Remain anonymous
+      %button.black.block.center.mt-10{"ng-click" => "clickedPurchaseSubscription()", "style" => "width: 250px;"} Continue
+      %p.small.center.center-align
+        %em Credit Cards + Bitcoin accepted. Powered by Stripe.
+
+    %p.strong{"ng-if" => "formData.processing"} Processing...
+    %p.strong{"ng-if" => "formData.success"}
+      Success! Thanks so much for your support. You will receive an email in the next couple days confirming your addition to our Producer directory.
+      In the meantime, if you have any questions, please don't hesitate to reach out to <a href="mailto:standardnotes@bitar.io">standardnotes@bitar.io</a>. Thanks again for your contribution.
+    %p.strong.red{"ng-if" => "formData.error"} {{formData.error.message}}
+
+  %p
+    To join as a Resource or Advocacy contributor, simply contribute to the open-source projects or advocate for us on the web.
+    We receive alerts whenever someone mentions us on the web, so we'll automatically take notice and induct you into the program.
+
+  %p And even if all you do is read this far, we're glad for your support and happy for your interest in longevity and privacy in software.
+
+  %h1 Our Producers
+  %ng-include{"src" => "'templates/producers_list.html'"}
+
+  %p
+    %em Producers are sorted in order of addition to the program.

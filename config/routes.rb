@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  post "api/subscriptions" => "subscriptions#create"
+  post "api/subscriptions/webhook" => "subscriptions#webhook"
+
   # dropbox ext
   get "ext/dropbox/:user_uuid" => "dropbox#show"
   post "ext/dropbox/:user_uuid/push" => "dropbox#push"

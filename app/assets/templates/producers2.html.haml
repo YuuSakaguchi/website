@@ -1,0 +1,50 @@
+%section.main-content
+  %h1 Community Investor
+  %p
+    Rather than create artificial roadblocks in your app experience that prompt you to pay to continue, we want to make your note experience <i>yours</i>, and not get in the way.
+    Our aim is to make the entire Standrad Notes experience forever free. You can help by becoming a Standard Notes "Community Investor".
+
+  %p
+    A community investor helps Standard Notes sustain and advance, and ensure cross-platform longevity.
+    These micro-investments also help ensure high standards in privacy and security practices, and help us hire security researchers and auditors to advise and confirm privacy.
+  %p In return, all of our community investors receive our eternal gratitute and a special mention in our permanent, etched-in-stone acknowledgements page.
+
+  
+
+  %p
+    To become a Producer as a capital contributor for $9/year,
+    %a{"ng-click" => "showJoin = !showJoin"} click here.
+  %div{"ng-if" => "showJoin", "style" => "border: 1px solid black; padding: 15px;"}
+    %p.strong Thank you for your interest in joining the Producer program.
+    %p The Producer program is billed annually at $9/year, and can be canceled at any time. (Bitcoin users will only be billed once, but we encourage you to come back to renew.)
+    %p Producers are mentioned on the homepage of our website for their support, along with a link to a website of their choosing (typically their Twitter profile or personal website).
+    %p If you'd like your contribution to remain anonymous, choose this option below.
+    %form.center.center-align.mt-20{"ng-if" => "!formData.processing && !formData.success"}
+      %input{"type" => "text", "placeholder" => "Name", "ng-model" => "formData.name"}
+      %input{"type" => "text", "placeholder" => "Email", "ng-model" => "formData.email"}
+      %input{"type" => "text", "placeholder" => "Your website/link", "ng-model" => "formData.website"}
+
+      %label.medium.block
+        %input{"type" => "checkbox", "ng-model" => "formData.anon"}
+        Remain anonymous
+      %button.black.block.center.mt-10{"ng-click" => "clickedPurchaseSubscription()", "style" => "width: 250px;"} Continue
+      %p.small.center.center-align
+        %em Credit Cards + Bitcoin accepted. Powered by Stripe.
+
+    %p.strong{"ng-if" => "formData.processing"} Processing...
+    %p.strong{"ng-if" => "formData.success"}
+      Success! Thanks so much for your support. You will receive an email in the next couple days confirming your addition to our Producer directory.
+      In the meantime, if you have any questions, please don't hesitate to reach out to <a href="mailto:standardnotes@bitar.io">standardnotes@bitar.io</a>. Thanks again for your contribution.
+    %p.strong.red{"ng-if" => "formData.error"} {{formData.error.message}}
+
+  %p
+    To join as a Resource or Advocacy contributor, simply contribute to the open-source projects or advocate for us on the web.
+    We receive alerts whenever someone mentions us on the web, so we'll automatically take notice and induct you into the program.
+
+  %p And even if all you do is read this far, we're glad for your support and happy for your interest in longevity and privacy in software.
+
+  %h1 Our Producers
+  %ng-include{"src" => "'templates/producers_list.html'"}
+
+  %p
+    %em Producers are sorted in order of addition to the program.

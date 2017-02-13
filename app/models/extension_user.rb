@@ -1,4 +1,4 @@
-class User < ApplicationRecord
+class ExtensionUser < ApplicationRecord
   include UuidHelper
   has_one :subscription
 

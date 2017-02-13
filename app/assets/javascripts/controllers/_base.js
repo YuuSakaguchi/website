@@ -16,13 +16,10 @@ class BaseCtrl {
       return url;
     }
 
-    $rootScope.executiveProducers = [
+    $rootScope.producers = [
       {name: "Jeff Camealy", link: "https://recordsetter.com/world-record/consecutive-bounces-table-tennis-ball-alternating-between-base-inside-coffee-mug/50623"},
       {name: "Carl Fletcher", link: ""},
-      {name: "Lev Lazinskiy", link: "https://twitter.com/levlaz"}
-    ]
-
-    $rootScope.producers = [
+      {name: "Lev Lazinskiy", link: "https://twitter.com/levlaz"},
       {name: "Phil Weber", link: "https://twitter.com/philweber"},
       {name: "Jorge Bay", link: "https://twitter.com/jorgebg"},
       {name: "Jason Kim", link: "https://twitter.com/jasoki"},

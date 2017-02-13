@@ -5,7 +5,7 @@ class DropboxController < ApplicationController
 
   before_action {
     if params[:user_uuid]
-      @user = User.find_by_uuid(params[:user_uuid])
+      @user = ExtensionUser.find_by_uuid(params[:user_uuid])
     end
   }
 
@@ -127,7 +127,7 @@ class DropboxController < ApplicationController
   end
 
   def dropbox_auth_complete
-    @user = User.new
+    @user = ExtensionUser.new
     code = params[:code]
 
     result = DropboxHelper.get_access_key(code, "dropbox_redirect")

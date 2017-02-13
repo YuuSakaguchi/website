@@ -10,6 +10,8 @@ gem 'sass'
 
 gem "non-stupid-digest-assets"
 
+gem 'jwt'
+
 gem 'uglifier'
 
 gem 'rack-cors', :require => 'rack/cors'
@@ -34,6 +36,9 @@ group :development, :test do
   gem 'spring'
 
   gem 'puma'
+
+  gem 'sinatra', github: 'sinatra' # for use by mailcatcher
+  gem 'mailcatcher'
 
   # Deployment tools
   gem 'capistrano'

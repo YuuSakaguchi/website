@@ -1,11 +1,4 @@
-%p Standard Notes would not be possible without the contributions of these individuals, and we are eternally grateful for their support.
+%p Our thanks goes to the following individuals, who have contributed to the advancement of Standard Notes in one way or another.
 
-%p.strong Executive Producers
-%a{"ng-repeat" => "producer in executiveProducers", "href" => "{{producer.link}}", "target" => "_blank"}
-  {{producer.name + ($index < executiveProducers.length - 1 ? "," : "")}}
-
-%p.strong Producers
-%a{"ng-repeat" => "producer in producers", "href" => "{{producer.link}}", "target" => "_blank"}
-  {{producer.name + ($index < producers.length - 1 ? "," : "")}}
-
-%p ...and other contributors who prefered to remain anonymous.
+%a.white-bg.mb-5.mr-5.medium.medium-padding.inline.center-align.bold{"ng-repeat" => "producer in producers", "style" => "color: black; min-width: 100px;", "href" => "{{producer.link}}", "target" => "_blank"}
+  {{producer.name}}

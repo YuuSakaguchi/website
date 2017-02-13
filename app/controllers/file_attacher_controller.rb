@@ -3,7 +3,7 @@ class FileAttacherController < ApplicationController
   include DropboxHelper
 
   def register
-    @user = User.new
+    @user = ExtensionUser.new
     key = EncryptionHelper.generate_random_key
     payload = {hashed_key: EncryptionHelper.sha256(key)}
     @user.payload = payload.to_json
@@ -16,7 +16,7 @@ class FileAttacherController < ApplicationController
 
   before_action {
     if params[:user_uuid]
-      @user = User.find_by_uuid(params[:user_uuid])
+      @user = ExtensionUser.find_by_uuid(params[:user_uuid])
     end
   }
 

@@ -5,12 +5,7 @@ class CreateSubscriptions < ActiveRecord::Migration[5.0]
       t.string :stripe_id
       t.string :stripe_name
 
-      t.string :user_stripe_id
-      t.string :user_email
-      t.string :user_name
-      t.string :user_website
-
-      t.boolean :anon_contrib
+      t.integer :pro_user_id
 
       t.string :payment_type
       t.datetime :active_until
@@ -19,8 +14,6 @@ class CreateSubscriptions < ActiveRecord::Migration[5.0]
 
       t.timestamps null: false
     end
-
-    add_index :subscriptions, :user_stripe_id, :unique => true
 
   end
 end

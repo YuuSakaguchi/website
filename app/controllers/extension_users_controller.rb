@@ -1,9 +1,9 @@
-class UsersController < ApplicationController
+class ExtensionUsersController < ApplicationController
 
   before_action {
     uuid = params[:uuid]
     key = params[:key]
-    @user = User.find_by_uuid(uuid)
+    @user = ExtensionUser.find_by_uuid(uuid)
     if !@user
       return render :status => 404
     end

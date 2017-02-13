@@ -21,7 +21,7 @@ angular.module('app.main')
         url: '/extensions',
         views: {
           'content@' : {
-            templateUrl: 'templates/extensions.html',
+            templateUrl: 'templates/extensions/extensions.html',
             controller: 'ExtensionsCtrl'
           }
         }
@@ -31,8 +31,18 @@ angular.module('app.main')
         url: '/dropbox?secret_url',
         views: {
           'content@' : {
-            templateUrl: 'templates/dropbox.html',
+            templateUrl: 'templates/extensions/dropbox.html',
             controller: 'DropboxCtrl'
+          }
+        }
+      })
+
+      .state('extensions.history', {
+        url: '/revision-history',
+        views: {
+          'content@' : {
+            templateUrl: 'templates/extensions/revisions.html',
+            controller: 'RevisionsExtCtrl'
           }
         }
       })
@@ -41,7 +51,7 @@ angular.module('app.main')
         url: '/file_attacher?secret_url&uuid',
         views: {
           'content@' : {
-            templateUrl: 'templates/file_attacher.html',
+            templateUrl: 'templates/extensions/file_attacher.html',
             controller: 'FileAttacherCtrl'
           }
         }
@@ -71,7 +81,28 @@ angular.module('app.main')
         views: {
           'content@' : {
             templateUrl: 'templates/producers.html',
-            controller: 'ProducersCtrl'
+            // controller: 'ProCtrl'
+          }
+        }
+      })
+
+      .state('pro', {
+        url: '/pro',
+        views: {
+          'content@' : {
+            templateUrl: 'templates/pro.html',
+            controller: 'ProCtrl'
+          }
+        }
+      })
+
+      .state('pro_dashboard', {
+        url: '/pro-dashboard?jwt',
+        params: {user: null},
+        views: {
+          'content@' : {
+            templateUrl: 'templates/pro_dashboard.html',
+            controller: 'ProDashboardCtrl'
           }
         }
       })

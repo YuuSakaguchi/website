@@ -1,16 +1,16 @@
 class SubscriptionsController < ApplicationController
 
+  include ExtensionServerHelper
+
   protect_from_forgery :except => :webhook
 
-  def create
-    # Amount in cents
-    @amount = 900
-    @subscription = Subscription.new
+  before_action only: [:create, :destroy] {
+    authenticate_pro_user
+    @subscription = @user.subscription
+  }
 
-    @subscription.user_name = params[:name]
-    @subscription.user_email = params[:email]
-    @subscription.user_website = params[:website]
-    @subscription.anon_contrib = params[:anon]
+  def create
+    @amount = 3000 # Amount in cents
 
     token_type = params[:token_type]
     if token_type == "source_bitcoin"
@@ -29,12 +29,14 @@ class SubscriptionsController < ApplicationController
       )
 
       if customer && charge
-        @subscription.user_stripe_id = customer.id
+        @subscription = @user.build_subscription
+        @user.stripe_id = customer.id
         @subscription.payment_type = "bitcoin"
         @subscription.save
+        @user.save
         render :json => @subscription
       else
-        render :json => {:error => {:message => "There was an error processing your payment. Please try again."}}
+        render :json => {:error => {:message => "There was an error processing your payment. Please try again."}}, :status => 500
       end
     else
       customer = Stripe::Customer.create(
@@ -44,15 +46,17 @@ class SubscriptionsController < ApplicationController
       )
 
       if customer
-        @subscription.user_stripe_id = customer.id
+        @user.stripe_id = customer.id
+        @subscription = @user.build_subscription
         subscription_data = customer.subscriptions.data[0]
         @subscription.stripe_id = subscription_data.id
         @subscription.stripe_name = subscription_data.plan.name
         @subscription.payment_type = "credit_card"
         @subscription.save
+        @user.save
         render :json => @subscription
       else
-        render :json => {:error => {:message => "There was an error processing your payment. Please try again."}}
+        render :json => {:error => {:message => "There was an error processing your payment. Please try again."}}, :status => 500
       end
     end
   end
@@ -69,22 +73,35 @@ class SubscriptionsController < ApplicationController
 
     case name
     when "customer.subscription.deleted"
-      @subscription = Subscription.find_by_user_stripe_id(event.data["object"]["customer"])
-      @subscription.canceled = true
+      @user = ProUser.find_by_stripe_id(event.data["object"]["customer"])
+      @user.subscription.canceled = true
     when "customer.subscription.created"
       require 'date'
-      @subscription = Subscription.find_by_user_stripe_id(event.data["object"]["customer"])
-      @subscription.active_until = Time.at(event.data["object"]["current_period_end"]).to_datetime
+      @user = ProUser.find_by_stripe_id(event.data["object"]["customer"])
+      @user.subscription.active_until = Time.at(event.data["object"]["current_period_end"]).to_datetime
+      activate_extensions
     when "charge.succeeded"
-      @subscription = Subscription.find_by_user_stripe_id(event.data["object"]["customer"])
-      @subscription.active_until = Time.now + 1.year
+      @user = ProUser.find_by_stripe_id(event.data["object"]["customer"])
+      @user.subscription.active_until = Time.now + 1.year
+      activate_extensions
     end
 
-    if @subscription
-      @subscription.save
+    if @user
+      @user.subscription.save
+      @user.save
     end
 
     render :status => 200
+  end
+
+  private
+
+  def activate_extensions
+    ExtensionServerHelper.set_user_pro_enabled(@user, true)
+  end
+
+  def disable_extensions
+    ExtensionServerHelper.set_user_pro_enabled(@user, false)
   end
 
 end

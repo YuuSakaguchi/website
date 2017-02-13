@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   after_action :set_csrf_cookie
+  attr_accessor :current_user
 
   layout :resolve_layout
 
@@ -12,6 +13,22 @@ class ApplicationController < ActionController::Base
 
   end
 
+  def authenticate_pro_user
+    token = params[:jwt]
+    claims = JwtHelper.decode(token) rescue nil
+    valid_until = claims[:valid_until].to_time
+
+    if valid_until.past?
+      render_unauthorized
+      return
+    end
+
+    self.current_user = ProUser.find claims['user_id']
+    if !self.current_user
+      render_unauthorized
+    end
+  end
+
   private
 
   def resolve_layout
@@ -21,6 +38,10 @@ class ApplicationController < ActionController::Base
      else
        "application"
      end
+  end
+
+  def render_unauthorized
+    render :json => {:error => {:message => "Unauthorized."}}, :status => 401
   end
 
   protected

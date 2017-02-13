@@ -21,8 +21,10 @@ Rails.application.routes.draw do
   get "ext/file_attacher/:user_uuid/download" => "file_attacher#download"
   delete "ext/file_attacher/:user_uuid" => "file_attacher#delete"
 
-  get "api/users/:uuid" => "users#show"
-  patch "api/users/:uuid" => "users#update"
+  get "api/extension_users/:uuid" => "extension_users#show"
+  patch "api/extension_users/:uuid" => "extension_users#update"
+
+  resources "pro_users", :path => "api/pro_users"
 
   get '*path' => 'application#main'
   root 'application#main'

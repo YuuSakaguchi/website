@@ -41,22 +41,6 @@ h4 {
   font-weight: bold !important;
 }
 
-button {
-  border: none;
-  &.black {
-    background-color: black;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
-    font-size: 16px;
-    min-width: 200px;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
 .block {
   display: block;
 }

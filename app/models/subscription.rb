@@ -9,5 +9,9 @@ class Subscription < ApplicationRecord
       return "valid"
     end
   end
-  
+
+  def valid
+    return status != "expired"
+  end
+
 end

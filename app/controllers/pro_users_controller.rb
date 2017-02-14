@@ -7,7 +7,7 @@ class ProUsersController < ApplicationController
   def create
     pro_user = ProUser.find_by_email(params[:email])
     if pro_user
-      if pro_user.subscription && pro_user.subscription.valid == false
+      if !pro_user.subscription || (pro_user.subscription && pro_user.subscription.valid == false)
         render :json => {:status => "expired"}
       else
         # send login email

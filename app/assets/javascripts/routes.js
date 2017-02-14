@@ -43,7 +43,7 @@ angular.module('app.main')
         views: {
           'content@' : {
             templateUrl: 'templates/extensions/revisions.html',
-            controller: 'RevisionsExtCtrl'
+            // controller: 'RevisionsExtCtrl'
           }
         }
       })

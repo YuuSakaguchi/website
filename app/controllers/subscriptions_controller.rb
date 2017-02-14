@@ -6,7 +6,7 @@ class SubscriptionsController < ApplicationController
 
   before_action only: [:create, :destroy] {
     authenticate_pro_user
-    @subscription = @user.subscription
+    @subscription = current_user.subscription
   }
 
   def create
@@ -29,11 +29,11 @@ class SubscriptionsController < ApplicationController
       )
 
       if customer && charge
-        @subscription = @user.build_subscription
-        @user.stripe_id = customer.id
+        @subscription = current_user.build_subscription
+        current_user.stripe_id = customer.id
         @subscription.payment_type = "bitcoin"
         @subscription.save
-        @user.save
+        current_user.save
         render :json => @subscription
       else
         render :json => {:error => {:message => "There was an error processing your payment. Please try again."}}, :status => 500
@@ -46,14 +46,14 @@ class SubscriptionsController < ApplicationController
       )
 
       if customer
-        @user.stripe_id = customer.id
-        @subscription = @user.build_subscription
+        current_user.stripe_id = customer.id
+        @subscription = current_user.build_subscription
         subscription_data = customer.subscriptions.data[0]
         @subscription.stripe_id = subscription_data.id
         @subscription.stripe_name = subscription_data.plan.name
         @subscription.payment_type = "credit_card"
         @subscription.save
-        @user.save
+        current_user.save
         render :json => @subscription
       else
         render :json => {:error => {:message => "There was an error processing your payment. Please try again."}}, :status => 500
@@ -73,22 +73,22 @@ class SubscriptionsController < ApplicationController
 
     case name
     when "customer.subscription.deleted"
-      @user = ProUser.find_by_stripe_id(event.data["object"]["customer"])
-      @user.subscription.canceled = true
+      user = ProUser.find_by_stripe_id(event.data["object"]["customer"])
+      user.subscription.canceled = true
     when "customer.subscription.created"
       require 'date'
-      @user = ProUser.find_by_stripe_id(event.data["object"]["customer"])
-      @user.subscription.active_until = Time.at(event.data["object"]["current_period_end"]).to_datetime
-      activate_extensions
+      user = ProUser.find_by_stripe_id(event.data["object"]["customer"])
+      user.subscription.active_until = Time.at(event.data["object"]["current_period_end"]).to_datetime
+      activate_extensions(user)
     when "charge.succeeded"
-      @user = ProUser.find_by_stripe_id(event.data["object"]["customer"])
-      @user.subscription.active_until = Time.now + 1.year
-      activate_extensions
+      user = ProUser.find_by_stripe_id(event.data["object"]["customer"])
+      user.subscription.active_until = Time.now + 1.year
+      activate_extensions(user)
     end
 
-    if @user
-      @user.subscription.save
-      @user.save
+    if user
+      user.subscription.save
+      user.save
     end
 
     render :status => 200
@@ -96,12 +96,12 @@ class SubscriptionsController < ApplicationController
 
   private
 
-  def activate_extensions
-    ExtensionServerHelper.set_user_pro_enabled(@user, true)
+  def activate_extensions(user)
+    ExtensionServerHelper.set_user_pro_enabled(user, true)
   end
 
-  def disable_extensions
-    ExtensionServerHelper.set_user_pro_enabled(@user, false)
+  def disable_extensions(user)
+    ExtensionServerHelper.set_user_pro_enabled(user, false)
   end
 
 end

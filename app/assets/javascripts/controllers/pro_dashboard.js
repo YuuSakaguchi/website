@@ -4,7 +4,7 @@ class ProDashboardCtrl {
     $scope.buildExtensions = function() {
       $scope.extensions = [
           {
-            name: "Revision History",
+            name: "Note History",
             desc: "Track changes to your notes and restore to previous versions.",
             url: $scope.user.extension_server_url + "/revisions"
           }

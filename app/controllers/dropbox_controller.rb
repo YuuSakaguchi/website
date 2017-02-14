@@ -5,7 +5,7 @@ class DropboxController < ApplicationController
 
   before_action {
     if params[:user_uuid]
-      @user = User.find_by_uuid(params[:user_uuid])
+      @user = ExtensionUser.find_by_uuid(params[:user_uuid])
     end
   }
 
@@ -126,21 +126,21 @@ class DropboxController < ApplicationController
     send_data body.to_s, filename: "dropbox-notes.txt"
   end
 
-  def dropbox_auth_complete
-    @user = User.new
-    code = params[:code]
-
-    result = DropboxHelper.get_access_key(code, "dropbox_redirect")
-    if result[:error]
-      redirect_to "/extensions/dropbox?secret_url=error"
-    else
-      @user.enc_dropbox_token = result[:encrypted_token]
-      @user.save!
-
-      key = result[:key]
-      @secret_url = "#{ENV['HOST']}/ext/dropbox/#{@user.uuid}?key=#{key}"
-      redirect_to "/extensions/dropbox?secret_url=#{@secret_url}"
-    end
-  end
+  # def dropbox_auth_complete
+  #   @user = ExtensionUser.new
+  #   code = params[:code]
+  #
+  #   result = DropboxHelper.get_access_key(code, "dropbox_redirect")
+  #   if result[:error]
+  #     redirect_to "/extensions/dropbox?secret_url=error"
+  #   else
+  #     @user.enc_dropbox_token = result[:encrypted_token]
+  #     @user.save!
+  #
+  #     key = result[:key]
+  #     @secret_url = "#{ENV['HOST']}/ext/dropbox/#{@user.uuid}?key=#{key}"
+  #     redirect_to "/extensions/dropbox?secret_url=#{@secret_url}"
+  #   end
+  # end
 
 end

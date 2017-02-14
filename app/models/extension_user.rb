@@ -1,4 +1,6 @@
-class User < ApplicationRecord
+class ExtensionUser < ApplicationRecord
+  include UuidHelper
+  has_one :subscription
 
   def as_json(options)
     result = super(options)

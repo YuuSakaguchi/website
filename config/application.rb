@@ -44,7 +44,7 @@ module Neeto
       g.helper = false
     end
 
-    config.action_mailer.default_url_options = { host: ENV['APP_HOST'] }
+    config.action_mailer.default_url_options = { host: ENV['HOST'] }
 
     # SMTP settings
     config.action_mailer.delivery_method = :smtp

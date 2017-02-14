@@ -1,0 +1,39 @@
+%section.main-content
+  %h1 Extensions for Standard Notes
+
+  %p Extensions allow you to plug 3rd party services into your Standard Notes experience.
+
+  %p Anyone can build their own extension. You install an extension via a unique URL that you receive from your extension provider.
+
+  %h2 Free Extensions
+  .col-container
+    .white-bg.col-45.mb-10.mr-10.inline.large-padding.relative{"ng-repeat" => "ext in freeExtensions", "style" => "height: 200px;"}
+      %h3.name.bold {{ext.name}}
+      %p {{ext.desc}}
+      %a.absolute{"ng-if" => "ext.sref", "ui-sref" => "{{ext.sref}}", "style" => "bottom: 12px;"} Get
+      %a.absolute{"ng-if" => "ext.href", "href" => "{{ext.href}}", "style" => "bottom: 12px;"} Get
+
+  %h2 Producer Extensions
+  %p
+    Producer extensions are available as part of our
+    %a{"ui-sref" => "pro"} Standard Notes Pro subscription.
+  .col-container
+    .white-bg.col-45.mb-10.mr-10.inline.large-padding.relative{"ng-repeat" => "ext in proExtensions", "style" => "height: 200px;"}
+      %h3.name.bold {{ext.name}}
+      %p {{ext.desc}}
+      %a.absolute{"ng-if" => "ext.sref", "ui-sref" => "{{ext.sref}}", "style" => "bottom: 12px;"} Get
+      %a.absolute{"ng-if" => "ext.href", "href" => "{{ext.href}}", "style" => "bottom: 12px;"} Get
+
+  %h2 Import Tools
+  %p
+    For importing from Evernote and other services, see the
+    %a{"ui-sref" => "tools"} Tools page.
+
+  .mt-50
+    %hr
+    %p
+      If you develop your own extension and would like it listed here, please email us at
+      %a{"href" => "mailto:hello@standardnotes.org"} hello@standardnotes.org.
+    %p
+      For a technical explanation of how extensions work, see
+      %a{"href" => "https://github.com/standardnotes/doc/blob/master/Extensions.md"} Extensions Development Guide.

@@ -16,6 +16,11 @@
     <meta content="A standard notes app with an un-standard focus on longevity, portability, and privacy." name="og:description"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
+    <script>
+      window._ext_server = "<%= ENV['EXTENSIONS_SERVER'] %>";
+      window._stripe_pk = "<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>";
+    </script>
+
     <% if Rails.env.development? %>
       <%= javascript_include_tag "compiled.js", debug: true %>
     <% else %>
@@ -26,7 +31,7 @@
   </head>
 
   <body ng-class="bodyClass">
-    <div ui-view="content"></div>
+    <div ui-view="content" autoscroll="true"></div>
   </body>
 
 </html>

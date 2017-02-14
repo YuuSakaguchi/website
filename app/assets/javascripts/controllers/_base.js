@@ -15,6 +15,21 @@ class BaseCtrl {
       }
       return url;
     }
+
+    $rootScope.producers = [
+      {name: "Jeff Camealy", link: "https://recordsetter.com/world-record/consecutive-bounces-table-tennis-ball-alternating-between-base-inside-coffee-mug/50623"},
+      {name: "Carl Fletcher", link: "http://www.carlfletcher.org/"},
+      {name: "Jay Zisch", link: "https://github.com/jz709u"},
+      {name: "Lev Lazinskiy", link: "https://twitter.com/levlaz"},
+      {name: "Noel Bautista", link: "http://codingdoodles.com/"},
+      {name: "Amit Shinde", link: "https://github.com/amtsh"},
+      {name: "Sergio Pantoja", link: "https://github.com/sergiopantoja"},
+      {name: "John Huang", link: "https://twitter.com/ymhuang0808"},
+      {name: "Jamie Tanna", link: "https://twitter.com/jamietanna"},
+      {name: "Phil Weber", link: "https://twitter.com/philweber"},
+      {name: "Jorge Bay", link: "https://twitter.com/jorgebg"},
+      {name: "Jason Kim", link: "https://twitter.com/jasoki"},
+    ]
   }
 }
 

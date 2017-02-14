@@ -15,10 +15,6 @@ module DropboxHelper
 
     resp = HTTP.headers(content_type: 'application/json').post(url, :params => request_params)
 
-    puts "\n\n\n"
-    puts resp
-    puts "\n\n\n"
-
     if resp.code != 200
       @error = "Unable to authenticate. Please try again."
       return {:error => @error}

@@ -14,7 +14,7 @@ class ExtensionsCtrl {
       },
       {
         name: "Standard Journal",
-        desc: "A blogging extension for standard notes. Easily create your own personal blog from your notes.",
+        desc: "A blogging extension for Standard Notes. Easily create your own personal blog from your notes.",
         href: "https://github.com/standardnotes/standard-journal"
       }
     ]
@@ -22,7 +22,7 @@ class ExtensionsCtrl {
     $scope.proExtensions = [
       {
         name: "Note History",
-        desc: "Track changes to your notes and restore to older versions.",
+        desc: "Track changes to your notes and restore to previous versions.",
         sref: "extensions.history"
       }
     ]

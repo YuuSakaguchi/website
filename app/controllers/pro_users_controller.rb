@@ -8,7 +8,7 @@ class ProUsersController < ApplicationController
     pro_user = ProUser.find_by_email(params[:email])
     if pro_user
       if !pro_user.subscription || (pro_user.subscription && pro_user.subscription.valid == false)
-        render :json => {:status => "expired"}
+        render :json => {:status => "expired", :user => json_for_user(pro_user), :token => jwt(pro_user)}
       else
         # send login email
         ProUserMailer.login(pro_user, jwt(pro_user)).deliver_later
@@ -19,9 +19,13 @@ class ProUsersController < ApplicationController
 
     pro_user = ProUser.create({email: params[:email]})
     create_user_on_extensions_server(pro_user)
-    user_json = pro_user.as_json
-    user_json[:extension_server_url] = pro_user.extension_server_url
-    render :json => {:status => "did-register", :user => user_json, :token => jwt(pro_user)}
+    render :json => {:status => "did-register", :user => json_for_user(pro_user), :token => jwt(pro_user)}
+  end
+
+  def json_for_user(user)
+    user_json = user.as_json
+    user_json[:extension_server_url] = user.extension_server_url
+    user_json
   end
 
   def update

@@ -1,6 +1,8 @@
 class BaseCtrl {
   constructor($rootScope) {
 
+    console.log("ext server", window._ext_server);
+
     $rootScope.baseUrl = function() {
       return location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
     }

@@ -3,7 +3,7 @@ module ExtensionServerHelper
   require 'uri'
 
   def self.extension_server_url
-    return "#{ENV["EXT_SERVER_URL"]}"
+    return "#{ENV["EXTENSIONS_SERVER"]}"
   end
 
   def self.create_user(user)
@@ -15,7 +15,7 @@ module ExtensionServerHelper
   end
 
   def self.post_user(user, params)
-    url = "#{ENV["EXT_SERVER_URL"]}/users"
+    url = "#{ENV["EXTENSIONS_SERVER"]}/users"
     uri = URI.parse(url)
 
     http = Net::HTTP.new(uri.host, uri.port)

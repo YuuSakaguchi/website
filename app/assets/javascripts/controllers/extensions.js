@@ -5,7 +5,7 @@ class ExtensionsCtrl {
       {
         name: "Dropbox Sync",
         desc: "The Dropbox Sync extension allows you to sync your tags and notes to Dropbox for added redundancy.",
-        sref: "extensions.dropbox"
+        href: window._ext_server + "/dropbox"
       },
       {
         name: "File Attachments",

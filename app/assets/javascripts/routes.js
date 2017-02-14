@@ -27,15 +27,16 @@ angular.module('app.main')
         }
       })
 
-      .state('extensions.dropbox', {
-        url: '/dropbox?secret_url',
-        views: {
-          'content@' : {
-            templateUrl: 'templates/extensions/dropbox.html',
-            controller: 'DropboxCtrl'
-          }
-        }
-      })
+      // DEPRACATED
+      // .state('extensions.dropbox', {
+      //   url: '/dropbox?secret_url',
+      //   views: {
+      //     'content@' : {
+      //       templateUrl: 'templates/extensions/dropbox.html',
+      //       controller: 'DropboxCtrl'
+      //     }
+      //   }
+      // })
 
       .state('extensions.history', {
         url: '/revision-history',

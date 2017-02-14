@@ -17,7 +17,8 @@
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
     <script>
-      window._ext_server = "<%= ENV['EXTENSIONS_SERVER'] %>"
+      window._ext_server = "<%= ENV['EXTENSIONS_SERVER'] %>";
+      window._stripe_pk = "<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>";
     </script>
 
     <% if Rails.env.development? %>

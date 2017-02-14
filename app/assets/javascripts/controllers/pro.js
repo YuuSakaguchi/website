@@ -41,7 +41,7 @@ class ProCtrl {
     $scope.purchaseSubscription = function() {
       loadStripe(function(){
         var handler = StripeCheckout.configure({
-          key: 'pk_test_tF4XCNKWB67oNdSM4z4WPTaJ',
+          key: window._stripe_pk,
           locale: 'auto',
           bitcoin: true,
           token: function(token) {

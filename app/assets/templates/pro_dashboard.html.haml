@@ -2,10 +2,13 @@
   %h1 Standard Notes Pro — Dashboard
 
   %h2 Producer Extensions
-  %div.white-bg.large-padding{"ng-repeat" => "ext in extensions"}
+  %div.white-bg.large-padding.mt-10{"ng-repeat" => "ext in extensions"}
     %p.bold {{ext.name}}
     %p {{ext.desc}}
-    %a.block{"href" => "{{ext.url}}", "target" => "_blank"} Configure
+    %div{"ng-if" => "ext.editor"}
+      %p.bold To install this editor, copy the following URL and paste it into your Standard Notes app:
+      %p.wrap {{ext.url}}
+    %a.block{"ng-if" => "!ext.editor", "href" => "{{ext.url}}", "target" => "_blank"} Configure
 
   %h2 Producer Credit
   %p

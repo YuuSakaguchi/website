@@ -7,6 +7,12 @@ class ProDashboardCtrl {
             name: "Note History",
             desc: "Track changes to your notes and restore to previous versions.",
             url: $scope.user.extension_server_url + "/revisions"
+          },
+          {
+            name: "Advanced Markdown Editor",
+            desc: "An advanced Markdown editor with live preview, editor toolbar, and split pane support.",
+            editor: true,
+            url: $scope.user.extension_server_url + "/editors/advanced_markdown?name=Advanced Markdown"
           }
       ]
     }

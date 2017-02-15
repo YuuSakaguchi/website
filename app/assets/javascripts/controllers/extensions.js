@@ -1,6 +1,10 @@
 class ExtensionsCtrl {
   constructor($scope) {
 
+    console.log("Ext server", window._ext_server);
+
+    $scope.extServer = window._ext_server;
+
     $scope.freeExtensions = [
       {
         name: "Dropbox Sync",
@@ -11,6 +15,11 @@ class ExtensionsCtrl {
         name: "File Attachments",
         desc: "An extension that allows you to attach files to your notes.",
         sref: "extensions.file_attacher"
+      },
+      {
+        name: "Simple Markdown Editor",
+        desc: "A simple Markdown editor with split pane preview.",
+        sref: "extensions.simple_markdown"
       },
       {
         name: "Standard Journal",
@@ -24,6 +33,11 @@ class ExtensionsCtrl {
         name: "Note History",
         desc: "Track changes to your notes and restore to previous versions.",
         sref: "extensions.history"
+      },
+      {
+        name: "Advanced Markdown Editor",
+        desc: "An advanced Markdown editor with live preview, editor toolbar, and split pane support.",
+        sref: "extensions.advanced_markdown"
       }
     ]
 

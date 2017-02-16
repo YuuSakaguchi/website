@@ -59,7 +59,7 @@ angular.module('app.main')
       })
 
       .state('extensions.simple_markdown', {
-        url: '/simple_markdown',
+        url: '/simple-markdown',
         views: {
           'content@' : {
             templateUrl: 'templates/extensions/simple_markdown.html',
@@ -69,7 +69,7 @@ angular.module('app.main')
       })
 
       .state('extensions.advanced_markdown', {
-        url: '/advanced_markdown',
+        url: '/advanced-markdown',
         views: {
           'content@' : {
             templateUrl: 'templates/extensions/advanced_markdown.html'

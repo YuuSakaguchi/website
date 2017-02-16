@@ -58,6 +58,25 @@ angular.module('app.main')
         }
       })
 
+      .state('extensions.simple_markdown', {
+        url: '/simple_markdown',
+        views: {
+          'content@' : {
+            templateUrl: 'templates/extensions/simple_markdown.html',
+            controller: 'ExtensionsCtrl'
+          }
+        }
+      })
+
+      .state('extensions.advanced_markdown', {
+        url: '/advanced_markdown',
+        views: {
+          'content@' : {
+            templateUrl: 'templates/extensions/advanced_markdown.html'
+          }
+        }
+      })
+
       .state('tools', {
         url: '/tools',
         views: {

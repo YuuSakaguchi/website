@@ -72,7 +72,10 @@ angular.module('app.main')
         url: '/advanced-markdown',
         views: {
           'content@' : {
-            templateUrl: 'templates/extensions/advanced_markdown.html'
+            templateUrl: 'templates/extensions/advanced_markdown.html',
+            controller: function($scope){
+              $scope.iframeURL = window._ext_server + "/editors/advanced_markdown_demo";
+            }
           }
         }
       })

@@ -4,42 +4,21 @@
       .project-name Standard Notes
       .project-tagline A standard notes app with an un-standard focus on longevity, portability, and privacy.
 
-      .downloads-container
-        .download-item
-          %a.content-link{"href" => "https://app.standardnotes.org", "target" => "_blank"}
+      .downloads-container.mt-50
+        .download-item{"ng-repeat" => "item in downloads"}
+          %a.content-link{"href" => "{{item.link}}", "target" => "_blank"}
             .icon
-              %img{"src" => "assets/ico-chrome.png"}
+              %img{"ng-src" => "assets/{{item.icon}}"}
             .links
-              %a.link.block{"href" => "https://app.standardnotes.org", "target" => "_blank"} Web
+              %a.link{"href" => "{{item.link}}", "target" => "_blank"} {{item.name}}
+              %a.link.normal.screenshot-link.faded{"ng-if" => "item.screenshots.length > 0", "ng-click" => "clickedScreenshots(item)"} Screenshots
 
-        .download-item
-          %a.content-link{"href" => "https://github.com/standardnotes/desktop/releases/download/v0.2.4/standard-notes-0.2.4-mac.zip", "target" => "_blank"}
-            .icon
-              %img{"src" => "assets/ico-apple.png"}
-            .links
-              %a.link.inline{"href" => "https://itunes.apple.com/us/app/id1191215138?mt=8", "target" => "_blank"} iOS
-              %a.link.inline{"href" => "https://github.com/standardnotes/desktop/releases/download/v0.2.4/standard-notes-0.2.4-mac.zip", "target" => "_blank"} Mac
-
-        .download-item
-          %a.content-link{"href" => "https://github.com/standardnotes/desktop/releases/download/v0.2.4/standard-notes-Setup-0.2.4.exe", "target" => "_blank"}
-            .icon
-              %img{"src" => "assets/ico-windows.png"}
-            .links
-              %a.link.block{"href" => "https://github.com/standardnotes/desktop/releases/download/v0.2.4/standard-notes-Setup-0.2.4.exe", "target" => "_blank"} Windows
-
-        .download-item
-          %a.content-link{"href" => "https://github.com/standardnotes/desktop/releases/download/v0.2.4/standard-notes-0.2.4-x86_64.AppImage", "target" => "_blank"}
-            .icon
-              %img{"src" => "assets/ico-linux.png"}
-            .links
-              %a.link.block{"href" => "https://github.com/standardnotes/desktop/releases/download/v0.2.4/standard-notes-0.2.4-x86_64.AppImage", "target" => "_blank"} Linux
-
-        .download-item.na
-          %a.content-link
-            .icon
-              %img{"src" => "assets/ico-android.png"}
-            .links
-              %a.link.block.na Coming
+        .screenshots{"ng-if" => "displayData.screenshot", "ng-click" => "displayData.screenshot = null"}
+          .arrow.left-arrow{"ng-click" => "previousScreenshot($event)", "ng-class" => "hasPreviousScreenshot() ? '' : 'disabled'"} ➞
+          .content
+            .screenshot.center.center-align
+              %img.image.shadow-image{"ng-src" => "{{displayData.screenshot}}"}
+          .arrow.right-arrow{"ng-click" => "nextScreenshot($event)", "ng-class" => "hasNextScreenshot() ? '' : 'disabled'"} ➞
 
 
       .email-subscribe-wrapper

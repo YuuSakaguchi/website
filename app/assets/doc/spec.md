@@ -1,36 +1,32 @@
-*Notes so standard, they'll last forever.*
-
 > What I write is important to me. I want to be able to read it fifty years from now. A hundred years from now. So where do I go? Apple Notes? Google? Other private, short-lived, growth-oriented companies? No. What we need is something that _focuses_ on durability and **not** growth.
 
-<br>
-
-
+# The Standard Notes Way
 Standard Notes is a basic notes app that delivers only the essentials in note taking. Because of its simplicity and resistance to growth, users can count on:
 
-- **A standard data format that allows portability and an extended lifetime**. The more complex and custom an app becomes, the more likely your data becomes locked in to that platform, and the more buggy and laggy the application becomes. Because Standard Notes focuses on the "standard" format of a note, this data format, along with respective user-facing applications, are easy to maintain, and can exist for decades without issue. This means a less nomadic lifestyle for note takers.
+- **An app that won't deteriorate over time**. How often are you forced to switch to a new system every time developers of your favorite app decide to change everything around or just completely abandon the project? Applications that aim to survive an apocalypse must adapt to a different lifestyle. We follow principles that maximize longevity, not growth, period.
 
+- **A standard data format that allows portability and an extended lifetime**. The more complex and custom an app becomes, the more buggy it is, and the more likely your data becomes locked in to that platform. Focusing on the "standard" format of a note allows our applications to be easy to maintain, and aim to exist for decades without issue. This means a less nomadic lifestyle for note takers. And because the data format is built on top of the [Standard File](https://standardfile.org) format, your data can be used with any app that supports your Standard File account.
 
-- **A set of cross platform applications that don't deteriorate over time**. Simply put, applications that are simple are simpler to maintain. Applications that aim to survive an apocalypse must adapt to a different lifestyle. Because of this focus on durability, you won't be forced to switch over to a new system every time developers of your favorite notes app decide to change everything around or just completely abandon the project. And because the data format is built on top of the [Standard File](https://standardfile.org) format, your Standard Notes data can be used with any app that supports your Standard File account.
+- **High security and privacy**. Because Standard Notes uses the Standard File format, all your notes are encrypted on your device before being sent over the wire. This means that even if the server was hacked and all your data was stolen, the attacker would only see gibberish - only you can decrypt your notes. Standard Notes applications also do not use any analytics tracking services and will never require you to agree to a lengthy "Terms of Service".
 
-
-- **High security and privacy**. Because Standard Notes uses the Standard File format, all your notes are encrypted on your device before being sent over the wire. This means that even if the server was hacked and all your data was stolen, the attacker would only see gibberish - only you can decrypt your notes with your password key. Standard Notes applications also do not use any analytics tracking services and will never require you to agree to any "Terms of Service".
-
-## What makes the cut for note "basics"?
+# What makes the cut for note "basics"?
 
 The basic form of a note is timeless: it has existed since the invention of paper. Most things we know about history is known through the journals of our ancestors.
 
-**Standard Notes aims to simply translate the "journal" standard into its digital form. This means:**
+Standard Notes aims to simply translate the "journal" standard into its digital form. This means:
 
 - a basic note with a title and text
 - basic tagging system that allows a note to belong to one or multiple tags
 - the ability to search and filter notes based on tags or keywords
 
-**Standard Notes also makes some modernization updates to bring the timeless note format into the modern age:**
+While we like to keep it simple, we do like nice things too. Standard Notes allows for 3rd party extensions, such as:
 
-- custom extensions that allow 3rd party functionality, like [Dropbox Sync](/extensions) or [Revision Control](/extensions/revision-history)
-- a Markdown supported editor
+- [Dropbox Sync](/extensions)
+- [Note History](/extensions/revision-history)
+- [Markdown Editors](/extensions)
+- [File Attachments](/extensions)
 
-**And because data portability and durability are of utmost importance, Standard Notes allows you to easily:**
+And because data portability and durability are of utmost importance, Standard Notes allows you to easily:
 
 - export all data as a human readable file
 - import data from a previously exported file
@@ -51,7 +47,7 @@ Then, you'll choose a Standard File server to host your data:
 - https:<span></span>//n3.standardnotes.org (default)
 - https:<span></span>//n1.standardnotes.co.uk (in development, not yet available)
 
-Note that you should not visit these URLs directly, but instead enter them into the app in the "server" field.
+You shouldn't visit these URLs directly, but instead enter them into the app in the "server" field.
 
 *Note: because your data is encrypted before being sent to the server, it is not necessarily important to "trust" these servers. This means you can choose any server and rest assured that your data is secure.*
 
@@ -59,14 +55,13 @@ If you're tech savvy, you can even [host your own Standard File server](https://
 
 # Extensions
 
-To keep the core application as simple and as uncluttered as possible, Standard Notes allows for the installation of arbitrary extensions. These extensions are URL based, and anyone can build an extension.
+To keep the core application as simple and as uncluttered as possible, Standard Notes allows for the installation of 3rd party extensions.
 
 Extensions are simple yet extremely powerful. Extensions allow for things like:
-- 3rd party data sync
+- 3rd party data sync, like Dropbox or Google Drive
 - Revision control
+- Custom editors, like Markdown or Latex
 - Publishing your notes to your blog
-
-For example, you may want your notes and tags to be synced to your Dropbox for added redundancy and peace of mind. Extensions make this really easy.
 
 For a list of available extensions, see [extensions](/extensions).
 
@@ -101,9 +96,7 @@ Tag structures have the following properties:
 # Technical FAQ
 **What information does Standard Notes collect about me?**
 <br>
-As little as possible, if at all. Our apps do not use any data analytics libraries like Google Analytics, which track your behavior and present you with intrusive advertisements. Instead, we plan to do things the old fashioned way: opt-in email surveys, which we hope you'll respond to. Surveys will ensure we're building the right thing and help us understand how people are using the Standard Notes apps.
-
-In addition, Standard Notes will never require you to agree to a lengthy terms of conditions.
+As little as possible, if at all. Our apps do not use any data analytics libraries like Google Analytics, which track your behavior online and sell it to advertisers. Instead, we plan to do things the old fashioned way: optional surveys, whether through email or Twitter. In addition, Standard Notes will never require you to agree to a lengthy terms of service.
 
 # FAQ
 

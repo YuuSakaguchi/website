@@ -7,7 +7,7 @@
 
   %h2 Free Extensions
   .col-container{"style" => "display: flex; flex-wrap: wrap;"}
-    .white-bg.col-45.mb-10.mr-10.inline.large-padding.relative{"ng-repeat" => "ext in freeExtensions", "style" => "min-height: 200px; flex: 1; min-width: 300px;"}
+    .white-bg.col-45.mb-10.mr-10.inline.large-padding.relative{"ng-repeat" => "ext in freeExtensions", "style" => "min-height: 200px; flex: 1 0 auto; min-width: 250px;"}
       %h3.name.bold {{ext.name}}
       %p {{ext.desc}}
       %a.absolute{"ng-if" => "ext.sref", "ui-sref" => "{{ext.sref}}", "style" => "bottom: 12px;"} Get
@@ -19,7 +19,7 @@
     %a{"ui-sref" => "extended"} Standard Notes Extended
     subscription.
   .col-container{"style" => "display: flex; flex-wrap: wrap;"}
-    .white-bg.col-45.mb-10.mr-10.inline.large-padding.relative{"ng-repeat" => "ext in proExtensions", "style" => "min-height: 200px; flex: 1; min-width: 300px;"}
+    .white-bg.col-45.mb-10.mr-10.inline.large-padding.relative{"ng-repeat" => "ext in proExtensions", "style" => "min-height: 200px; flex: 1 0 auto; min-width: 250px;"}
       %h3.name.bold {{ext.name}}
       %p {{ext.desc}}
       %a.absolute{"ng-if" => "ext.sref", "ui-sref" => "{{ext.sref}}", "style" => "bottom: 12px;"} Get

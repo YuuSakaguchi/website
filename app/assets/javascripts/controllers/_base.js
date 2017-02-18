@@ -16,7 +16,7 @@ class BaseCtrl {
       return url;
     }
 
-    $rootScope.producers = [
+    $rootScope.producers = shuffle([
       {name: "Jeff Camealy", link: "https://recordsetter.com/world-record/consecutive-bounces-table-tennis-ball-alternating-between-base-inside-coffee-mug/50623"},
       {name: "Carl Fletcher", link: "http://www.carlfletcher.org/"},
       {name: "Jay Zisch", link: "https://github.com/jz709u"},
@@ -29,7 +29,19 @@ class BaseCtrl {
       {name: "Phil Weber", link: "https://twitter.com/philweber"},
       {name: "Jorge Bay", link: "https://twitter.com/jorgebg"},
       {name: "Jason Kim", link: "https://twitter.com/jasoki"},
-    ]
+    ]);
+
+    function shuffle(array) {
+      var rand, index = -1,
+        length = array.length,
+        result = Array(length);
+      while (++index < length) {
+        rand = Math.floor(Math.random() * (index + 1));
+        result[index] = result[rand];
+        result[rand] = array[index];
+      }
+      return result;
+    }
   }
 }
 

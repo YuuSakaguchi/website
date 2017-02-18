@@ -109,18 +109,18 @@ angular.module('app.main')
         }
       })
 
-      .state('pro', {
-        url: '/pro',
+      .state('extended', {
+        url: '/extended',
         views: {
           'content@' : {
-            templateUrl: 'templates/pro.html',
+            templateUrl: 'templates/extended.html',
             controller: 'ProCtrl'
           }
         }
       })
 
       .state('pro_dashboard', {
-        url: '/pro-dashboard?jwt',
+        url: '/subscriber-dashboard?jwt',
         params: {user: null},
         views: {
           'content@' : {

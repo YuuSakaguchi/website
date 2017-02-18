@@ -1,8 +1,6 @@
 class ExtensionsCtrl {
   constructor($scope) {
 
-    console.log("Ext server", window._ext_server);
-
     $scope.extServer = window._ext_server;
 
     $scope.freeExtensions = [

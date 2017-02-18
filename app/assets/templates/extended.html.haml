@@ -1,18 +1,18 @@
 %section.main-content
-  %h1 Standard Notes Pro
-  %p Standard Notes Pro is a paid membership that allows members to access exclusive benefits and premium extensions, and helps Standard Notes survive and sustain for the long run.
+  %h1 Standard Notes Extended
+  %p Standard Notes Extended is an optional subscription package that extends Standard Notes functionality with more advanced extensions, and helps Standard Notes sustain for the long run.
   %p.bold Benefits:
   %ul
     %li
-      Access to all Pro extensions, current and future.
+      Access to all advanced extensions, current and future.
       %a{"ui-sref" => "extensions"} (See full list here)
-    %li Priority support, including 1-on-1 technical assistance with setting up your own Standard Notes/Standard File server (for maximum privacy).
     %li
-      1-on-1 tech session with help setting up your own personal
+      Priority support, including 1-on-1 technical assistance with setting up your own Standard Notes/Standard File server (for maximum privacy)
+      and help with setting up your own
       %a{"href" => "https://github.com/standardnotes/standard-journal"} Standard Journal blog,
-      which you can publish to directly from your Standard Notes app.
+      which you publish to directly from Standard Notes.
     %li
-      Support Standard Note's mission for privacy and longevity. In return, you'll get a mention on our homepage in the Credits section.
+      Support Standard Note's mission for privacy and longevity in software.
 
   %h2.inline.mr-20 $30/year
   %button.black.inline{"ng-click" => "formData.showEmailForm = true", "ng-if" => "!formData.showEmailForm"} Subscribe
@@ -21,7 +21,7 @@
     %button.black.inline.top{"ng-click" => "submitEmail()"} Continue
 
   .mt-10{"ng-if" => "formData.processing"} Processing...
-  .mt-10.bold{"ng-if" => "formData.success"} Success! Welcome to Standard Notes Pro. Redirecting...
+  .mt-10.bold{"ng-if" => "formData.success"} Success! Welcome to Standard Notes Extended. Redirecting...
   .mt-10.red{"ng-if" => "formData.error"} {{formData.error.message}}
   .mt-10{"ng-if" => "formData.registrationResponse"} {{formData.registrationResponse}}
 
@@ -30,5 +30,5 @@
 
   %hr
   %p
-    Questions about Pro? Email us at
-    %a{"href" => "mailto:hello@standardnotes.org?subject=Question about Pro"} hello@standardnotes.org
+    Questions? Email us at
+    %a{"href" => "mailto:hello@standardnotes.org?subject=Question about Extended"} hello@standardnotes.org

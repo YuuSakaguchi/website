@@ -103,8 +103,6 @@ Tag structures have the following properties:
 <br>
 As little as possible, if at all. Our apps do not use any data analytics libraries like Google Analytics, which track your behavior and present you with intrusive advertisements. Instead, we plan to do things the old fashioned way: opt-in email surveys, which we hope you'll respond to. Surveys will ensure we're building the right thing and help us understand how people are using the Standard Notes apps.
 
-(At present one small exception exists, which is Crashlytics for the Standard Notes iOS app. This tool helps us understand when and why the app crashes. We plan to remove this as soon as we're confident of the app's stability.)
-
 In addition, Standard Notes will never require you to agree to a lengthy terms of conditions.
 
 # FAQ
@@ -117,7 +115,7 @@ We're...not sure yet. On the one hand, we don't want to beg for donations to sur
 <br>
 Excellent question — what are our incentives? Our incentives are simple: 1. Develop a cross-platform notes app that respects privacy and follows principles that maximize longevity. 2. Sustain the app and team, allowing us to continue doing what we love.
 
-Our revenue model is currently the [Standard Notes Pro subscription](/pro), which affords you a few neat features, like access to current and future Producer extensions (like the Note History extension), and priority support with setting up your own Standard Notes/Standard File server or Standard Notes based personal blog.
+We're currently trying the [Standard Notes Extended subscription](/extended), which provides subscribers with some benefits, like access to Advanced extensions (like the Note History extension and the Advanced Markdown Editor), and priority support with setting up a personal Standard Notes/Standard File server or Standard Notes based personal blog.
 
 **How do you know you'll be here for a while?**
 <br>

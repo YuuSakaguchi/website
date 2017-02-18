@@ -1,7 +1,7 @@
 %section.main-content
-  %h1 Standard Notes Pro — Dashboard
+  %h1 Standard Notes Extended — Dashboard
 
-  %h2 Producer Extensions
+  %h2 Advanced Extensions
   %div.white-bg.large-padding.mt-10{"ng-repeat" => "ext in extensions"}
     %p.bold {{ext.name}}
     %p {{ext.desc}}
@@ -12,23 +12,21 @@
 
   %h2 Producer Credit
   %p
-    Thank you for your support. By purchasing a Pro subscription, you're helping support Standard Note's
+    Thank you for your support. By purchasing an Extended subscription, you're helping support Standard Note's
     mission for privacy and longevity in software.
 
-    We'd like to add you to our
-    %a{"href" => "/producers"} Producers page.
-    We'll add your name and a website of your choosing to the page.
+    We'd like to mention you in our credits. We'll add your name and a website of your choosing to the page.
     %form
       %input.form-control{"type" => "text", "ng-model" => "user.name", "placeholder" => "Your name"}
       %input.form-control{"type" => "text", "ng-model" => "user.website", "placeholder" => "Your website/twitter"}
       %button.black.inline{"ng-click" => "submitInfoForm()"} Submit
-    %p{"ng-if" => "infoFormData.success"} Your information has been successfully updated. Please allow a few days for your information to be updated in the Producers page.
+    %p{"ng-if" => "infoFormData.success"} Your information has been successfully updated. Please allow a few days for credits change.
     %p.red{"ng-if" => "infoFormData.error"} There was an error saving your info. Please try again.
 
   %h2 Support
   %p
     For help with setting up your own private Standard Notes or Standard File server, send an email  to
-    %a{"href" => "mailto:prodocuers@standardnotes.org"} producers@standardnotes.org.
+    %a{"href" => "mailto:extended@standardnotes.org"} extended@standardnotes.org.
     We'll help you get started and offer guidance every step of the way.
   %p
-    %em (Make sure you send the email from the account associated with your Pro account.)
+    %em (Make sure you send the email from the account associated with your Extended account.)

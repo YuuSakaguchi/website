@@ -50,7 +50,7 @@ class ProCtrl {
         });
 
         handler.open({
-          name: 'Standard Notes Pro',
+          name: 'Standard Notes Extended',
           description: 'Subscription',
           amount: 3000
         });

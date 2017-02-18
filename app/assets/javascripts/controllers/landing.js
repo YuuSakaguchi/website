@@ -100,7 +100,6 @@ class LandingCtrl {
         index++;
 
         preloaded.onload = function() {
-          console.log("preloaded");
           loadNext();
         };
       }

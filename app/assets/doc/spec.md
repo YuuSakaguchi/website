@@ -115,7 +115,7 @@ We're...not sure yet. On the one hand, we don't want to beg for donations to sur
 <br>
 Excellent question — what are our incentives? Our incentives are simple: 1. Develop a cross-platform notes app that respects privacy and follows principles that maximize longevity. 2. Sustain the app and team, allowing us to continue doing what we love.
 
-We're currently trying the [Standard Notes Extended subscription](/extended), which provides subscribers with some benefits, like access to Advanced extensions (like the Note History extension and the Advanced Markdown Editor), and priority support with setting up a personal Standard Notes/Standard File server or Standard Notes based personal blog.
+We're currently trying the [Standard Notes Extended](/extended) subscription, which provides subscribers with some benefits, like access to Advanced extensions (like the Note History extension and the Advanced Markdown Editor), and priority support with setting up a personal Standard Notes/Standard File server or Standard Notes based personal blog.
 
 **How do you know you'll be here for a while?**
 <br>

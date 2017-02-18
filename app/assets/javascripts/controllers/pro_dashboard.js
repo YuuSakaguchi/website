@@ -27,7 +27,7 @@ class ProDashboardCtrl {
       .catch(function(errorResponse){
         console.log("Fetch user from JWT error:", errorResponse);
         alert("Your login session has expired.");
-        $state.go("pro");
+        $state.go("extended");
       })
     } else if($stateParams.user) {
       $scope.user = $stateParams.user;

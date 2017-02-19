@@ -63,8 +63,11 @@ angular.module('app.main')
         views: {
           'content@' : {
             templateUrl: 'templates/extensions/simple_markdown.html',
-            controller: 'ExtensionsCtrl'
-          }
+            controller: function($scope){
+              $scope.extServer = window._ext_server;
+              $scope.iframeURL = window._ext_server + "/editors/simple_markdown_demo";
+            }
+          },
         }
       })
 

@@ -1,8 +1,6 @@
 class ExtensionsCtrl {
   constructor($scope) {
 
-    $scope.extServer = window._ext_server;
-
     $scope.freeExtensions = [
       {
         name: "Dropbox Sync",

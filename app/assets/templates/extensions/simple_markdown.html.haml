@@ -6,9 +6,9 @@
   %iframe.shadow-image{"width" => "100%",  "ng-src" => "{{iframeURL | trusted}}", "frameBorder" => "0", "style" => "min-height: 650px; height: auto;"}
 
   %h2 Installation
-  %p.bold To install, simply copy the following URL and paste it in the "Editor" dropdown in your Standard Notes app:
+  %p.bold To install, simply copy the following URL and paste it in the "Extensions" section of your Standard Notes app:
   %p
-    %em {{extServer + "/editors/simple_markdown?name=Simple Markdown"}}
+    %em.wrap {{extURL}}
 
   %h2 Screenshots
   %img.shadow-image{"src" => "assets/simple-markdown.png"}

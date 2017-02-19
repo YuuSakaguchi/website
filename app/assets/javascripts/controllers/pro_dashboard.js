@@ -1,6 +1,9 @@
 class ProDashboardCtrl {
   constructor($rootScope, $scope, $timeout, Restangular, $stateParams, $state) {
 
+    var ap = window.btoa(JSON.stringify({name: "Advanced Markdown Editor", type: "SN|Editor"}));
+    let advMarkdownEditorURL = $scope.user.extension_server_url + "/editors/advanced_markdown" + "?ap=" + ap;
+
     $scope.buildExtensions = function() {
       $scope.extensions = [
           {
@@ -12,7 +15,7 @@ class ProDashboardCtrl {
             name: "Advanced Markdown Editor",
             desc: "An advanced Markdown editor with live preview, editor toolbar, and split pane support.",
             editor: true,
-            url: $scope.user.extension_server_url + "/editors/advanced_markdown?name=Advanced Markdown"
+            url: advMarkdownEditorURL
           }
       ]
     }

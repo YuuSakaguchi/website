@@ -64,7 +64,8 @@ angular.module('app.main')
           'content@' : {
             templateUrl: 'templates/extensions/simple_markdown.html',
             controller: function($scope){
-              $scope.extServer = window._ext_server;
+              var ap = window.btoa(JSON.stringify({name: "Simple Markdown Editor", type: "SN|Editor"}));
+              $scope.extURL = window._ext_server + "/editors/simple_markdown" + "?ap=" + ap;
               $scope.iframeURL = window._ext_server + "/editors/simple_markdown_demo";
             }
           },

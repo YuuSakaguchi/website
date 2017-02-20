@@ -5,10 +5,12 @@
 
   %p Anyone can build their own extension. You install an extension via a unique URL that you receive from your extension provider.
 
-  %h2 Free Extensions
+  %h2 Standard Extensions
   .col-container{"style" => "display: flex; flex-wrap: wrap;"}
     .white-bg.col-45.mb-10.mr-10.inline.large-padding.relative{"ng-repeat" => "ext in freeExtensions", "style" => "min-height: 200px; flex: 1 0 auto; min-width: 250px;"}
-      %h3.name.bold {{ext.name}}
+      %h3.name.bold.no-margin {{ext.name}}
+      .faded.medium{"ng-repeat" => "type in ext.types", "style" => "margin-top: -1px;"}
+        {{type}}
       %p {{ext.desc}}
       %a.absolute{"ng-if" => "ext.sref", "ui-sref" => "{{ext.sref}}", "style" => "bottom: 12px;"} Get
       %a.absolute{"ng-if" => "ext.href", "href" => "{{ext.href}}", "style" => "bottom: 12px;"} Get
@@ -20,7 +22,9 @@
     subscription.
   .col-container{"style" => "display: flex; flex-wrap: wrap;"}
     .white-bg.col-45.mb-10.mr-10.inline.large-padding.relative{"ng-repeat" => "ext in proExtensions", "style" => "min-height: 200px; flex: 1 0 auto; min-width: 250px;"}
-      %h3.name.bold {{ext.name}}
+      %h3.name.bold.no-margin {{ext.name}}
+      .faded.medium{"ng-repeat" => "type in ext.types", "style" => "margin-top: -1px;"}
+        {{type}}
       %p {{ext.desc}}
       %a.absolute{"ng-if" => "ext.sref", "ui-sref" => "{{ext.sref}}", "style" => "bottom: 12px;"} Get
       %a.absolute{"ng-if" => "ext.href", "href" => "{{ext.href}}", "style" => "bottom: 12px;"} Get
@@ -30,6 +34,23 @@
     For importing from Evernote and other services, see the
     %a{"ui-sref" => "tools"} Tools page.
 
+  %h1 About Extensions
+  %p
+    Because we focus on making your data survive for the long run, we had to design our system differently than most products.
+    We aim to keep a separation of conerns between your data and our notes app. Your data is owned by you, not us, on your Standard File account.
+    Standard File is not a company, nor is it a product — it's a way of structuring and encrypting data that anyone can use and build on. Standard Notes on the other hand <em>is</em>
+    a company, albeit a different kind of company. The lifespan of ideas and philosophies are typically much longer than those of companies. So, we wanted to design our system such that your data does not depend on us to survive.
+
+  %p Both Standard Notes and Standard File have their own extensions.
+
+  %p
+    %strong Standard Notes extensions
+    are related to how you interact with the Standard Notes app. These are primarly extensions that you can <em>see</em> and interact with. The main types of extensions here are menu-based extensions and custom editors.
+  %p
+    %strong Standard File extensions
+    are related to your data, and to where it is backed up or stored. These are extensions that operate behind the scenes, without you needing to worry about them. These include things like Dropbox sync, or managing revision history for your data.
+
+  %p You register Standard Notes extensions using the main app, and you register Standard File extensions using your Standard File dashboard, which you can access through the "Account" option in the main Standard Notes app.
   .mt-50
     %hr
     %p

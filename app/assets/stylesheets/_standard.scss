@@ -6,6 +6,10 @@
   float: right !important;
 }
 
+.no-margin {
+  margin: 0 !important;
+}
+
 .mt-1 {
   margin-top: 1px !important;
 }
@@ -106,6 +110,10 @@
 .large-v-space {
   height: 24px;
   display: block;
+}
+
+.no-padding {
+  padding: 0 !important;
 }
 
 .small-padding {
@@ -219,6 +227,11 @@ button {
 .white-bg {
   background-color: white;
   border: 1px solid rgba(gray, 0.2);
+}
+
+.black-bg {
+  background-color: black;
+  color: white;
 }
 
 .col-container {

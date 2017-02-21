@@ -45,11 +45,11 @@ class LandingCtrl {
         icon: "ico-apple.png",
         link: "https://github.com/standardnotes/desktop/releases/download/v0.2.4/standard-notes-0.2.4-mac.zip",
         screenshots: [
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/1.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/2.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/3.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/4.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/5.jpg"
+          "https://s3.amazonaws.com/standard-notes/screenshots/mac/jpg/1.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/mac/jpg/2.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/mac/jpg/3.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/mac/jpg/4.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/mac/jpg/5.jpg"
         ]
       },
       {
@@ -57,11 +57,11 @@ class LandingCtrl {
         icon: "ico-windows.png",
         link: "https://github.com/standardnotes/desktop/releases/download/v0.2.4/standard-notes-Setup-0.2.4.exe",
         screenshots: [
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/1.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/2.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/3.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/4.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/5.jpg"
+          "https://s3.amazonaws.com/standard-notes/screenshots/desktop/jpg/1.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/desktop/jpg/2.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/desktop/jpg/3.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/desktop/jpg/4.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/desktop/jpg/5.jpg"
         ]
       },
       {
@@ -69,11 +69,11 @@ class LandingCtrl {
         icon: "ico-linux.png",
         link: "https://github.com/standardnotes/desktop/releases/download/v0.2.4/standard-notes-0.2.4-x86_64.AppImage",
         screenshots: [
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/1.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/2.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/3.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/4.jpg",
-          "https://s3.amazonaws.com/standard-notes/screenshots/web/jpg/5.jpg"
+          "https://s3.amazonaws.com/standard-notes/screenshots/desktop/jpg/1.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/desktop/jpg/2.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/desktop/jpg/3.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/desktop/jpg/4.jpg",
+          "https://s3.amazonaws.com/standard-notes/screenshots/desktop/jpg/5.jpg"
         ]
       },
       {

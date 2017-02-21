@@ -2,15 +2,18 @@ class FileAttacherController < ApplicationController
 
   include DropboxHelper
 
+  def redirect_to_logged_in_dashboard(key)
+    @secret_url = CGI.escape("#{ENV['HOST']}/ext/file_attacher/#{@user.uuid}?key=#{key}&type=sn")
+    redirect_to "/extensions/file_attacher?secret_url=#{@secret_url}"
+  end
+
   def register
     @user = ExtensionUser.new
     key = EncryptionHelper.generate_random_key
     payload = {hashed_key: EncryptionHelper.sha256(key)}
     @user.payload = payload.to_json
     @user.save
-
-    @secret_url = "#{ENV['HOST']}/ext/file_attacher/#{@user.uuid}?key=#{key}"
-    redirect_to "/extensions/file_attacher?secret_url=#{@secret_url}"
+    redirect_to_logged_in_dashboard(key)
   end
 
 
@@ -92,6 +95,10 @@ class FileAttacherController < ApplicationController
   end
 
   def upload
+    if !@user.enc_dropbox_token
+      redirect_to_logged_in_dashboard(params[:key])
+      return
+    end
     uploaded_io = params[:file]
     dropbox.upload("/file_attacher/#{params[:item_uuid]}/#{uploaded_io.original_filename}", uploaded_io.read, {:mode => "overwrite"})
     redirect_to files_path(request.parameters)

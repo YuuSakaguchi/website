@@ -5,16 +5,18 @@
     There was an error linking your Dropbox. Please try again.
 
   %div{"ng-if" => "secretUrl"}
+
+    %p{"ng-if" => "!user.dropbox_linked"}
+      %a{"href" => "{{dropboxLink}}"}
+        %button.black Link Dropbox
+
+    %p{"ng-if" => "user.dropbox_linked"}
+      Dropbox is linked
     %p
       Your secret URL is:
       %strong {{secretUrl}}
 
-    %p Enter this URL in apps that support Standard File extensions.
-
-    %p{"ng-if" => "!user.dropbox_linked"}
-      %a{"href" => "{{dropboxLink}}"} Link Dropbox
-    %p{"ng-if" => "user.dropbox_linked"}
-      Dropbox is linked
+    %p Make sure your Dropbox is linked, then enter this URL in your Standard Notes app under "Extensions".
 
   %div{"ng-if" => "!secretUrl"}
     %p

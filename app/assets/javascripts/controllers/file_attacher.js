@@ -32,9 +32,9 @@ class FileAttacherCtrl {
       var request = Restangular.one("extension_users", uuid);
       _.merge(request, {dropbox_token : dropboxAccessToken, key : key});
       request.patch().then(function(response){
-        window.location.href = `/extensions/file_attacher?secret_url=${$rootScope.baseUrl()}/ext/file_attacher/${uuid}?key=${key}`;
+        let secretUrl = encodeURIComponent(`${$rootScope.baseUrl()}/ext/file_attacher/${uuid}?key=${key}&type=sn`);
+        window.location.href = `/extensions/file_attacher?secret_url=${secretUrl}`;
       })
-
     } else {
       var result = $stateParams.secret_url;
       if(result) {

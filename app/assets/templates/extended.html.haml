@@ -16,6 +16,7 @@
 
   %h2.inline.mr-20 $30/year
   %button.black.inline{"ng-click" => "formData.showEmailForm = true", "ng-if" => "!formData.showEmailForm"} Subscribe
+  %a.inline{"ng-if" => "!formData.showEmailForm", "ng-click" => "formData.showEmailForm = true", "style" => "margin-left: 10px; cursor: pointer;"} Login
   .mt-10{"ng-if" => "formData.showEmailForm"}
     %input.form-control.inline.top{"type" => "email", "ng-model" => "formData.email", "placeholder" => "Enter your email address", "style" => "height: 39px;"}
     %button.black.inline.top{"ng-click" => "submitEmail()"} Continue

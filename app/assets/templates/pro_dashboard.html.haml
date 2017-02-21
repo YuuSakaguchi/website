@@ -6,7 +6,7 @@
     %p.bold {{ext.name}}
     %p {{ext.desc}}
     %div{"ng-if" => "ext.editor"}
-      %p.bold To install this editor, copy the following URL and paste it into your Standard Notes app:
+      %p.bold To install this editor, copy the following URL and paste it into your Standard Notes app under "Editors":
       %p.wrap {{ext.url}}
     %a.block{"ng-if" => "!ext.editor", "href" => "{{ext.url}}", "target" => "_blank"} Configure
 

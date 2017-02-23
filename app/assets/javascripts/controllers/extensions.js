@@ -4,7 +4,7 @@ class ExtensionsCtrl {
     $scope.freeExtensions = [
       {
         name: "Dropbox Sync",
-        desc: "The Dropbox Sync extension allows you to sync your tags and notes to Dropbox for added redundancy.",
+        desc: "Allows you to sync your tags and notes to Dropbox for added redundancy.",
         href: window._ext_server + "/dropbox",
         types: ["Standard File Extension"]
       },
@@ -46,8 +46,8 @@ class ExtensionsCtrl {
 
     $scope.experimentalExtensions = [
       {
-        name: "Realtime Collaborative Document",
-        desc: "A proof of concept for a collaborative end-to-end encrypted text editor in Standard Notes.",
+        name: "Realtime Collaborative Editor",
+        desc: "A proof of concept collaborative text editor with end-to-end encryption.",
         sref: "extensions.collab",
         types: ["Standard Notes Extension"]
       }

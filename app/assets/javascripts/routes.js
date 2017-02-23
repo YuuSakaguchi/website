@@ -83,6 +83,15 @@ angular.module('app.main')
         }
       })
 
+      .state('extensions.collab', {
+        url: '/collaborative-editor',
+        views: {
+          'content@' : {
+            templateUrl: 'templates/extensions/collab_editor.html'
+          }
+        }
+      })
+
       .state('tools', {
         url: '/tools',
         views: {

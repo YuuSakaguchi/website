@@ -44,6 +44,15 @@ class ExtensionsCtrl {
       }
     ]
 
+    $scope.experimentalExtensions = [
+      {
+        name: "Realtime Collaborative Document",
+        desc: "A proof of concept for a collaborative end-to-end encrypted text editor in Standard Notes.",
+        sref: "extensions.collab",
+        types: ["Standard Notes Extension"]
+      }
+    ]
+
   }
 }
 

@@ -29,6 +29,16 @@
       %a.absolute{"ng-if" => "ext.sref", "ui-sref" => "{{ext.sref}}", "style" => "bottom: 12px;"} Get
       %a.absolute{"ng-if" => "ext.href", "href" => "{{ext.href}}", "style" => "bottom: 12px;"} Get
 
+  %h2 Experimental Extensions
+  .col-container{"style" => "display: flex; flex-wrap: wrap;"}
+    .white-bg.col-45.mb-10.mr-10.inline.large-padding.relative{"ng-repeat" => "ext in experimentalExtensions", "style" => "min-height: 200px; flex: 1 0 auto; min-width: 250px;"}
+      %h3.name.bold.no-margin {{ext.name}}
+      .faded.medium{"ng-repeat" => "type in ext.types", "style" => "margin-top: -1px;"}
+        {{type}}
+      %p {{ext.desc}}
+      %a.absolute{"ng-if" => "ext.sref", "ui-sref" => "{{ext.sref}}", "style" => "bottom: 12px;"} Get
+      %a.absolute{"ng-if" => "ext.href", "href" => "{{ext.href}}", "style" => "bottom: 12px;"} Get
+
   %h2 Import Tools
   %p
     For importing from Evernote and other services, see the

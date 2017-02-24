@@ -1,6 +1,6 @@
 %section.main-content
-  %h1 Realtime Collaborative Editor
-  %p A proof of concept collaborative text editor with end-to-end encryption for Standard Notes. Simply share the URL with anyone you want to collaborate with.
+  %h1 Realtime Collaborative Markdown Editor
+  %p A proof of concept collaborative text editor with end-to-end encryption. Simply share the URL with anyone you want to collaborate with.
 
   %h2 Usage
   %h4 As a Standard Notes Editor:
@@ -8,17 +8,17 @@
   %p
     %strong https://extensions.standardnotes.org/collab?name=Collaborative Editor
   %h4 Standalone
-  %p To use as a standalone, end-to-end encrypted document, simply visit this URL in your browser:
+  %p To use as a standalone, end-to-end encrypted document, simply visit this URL in your browser to create a new document:
   %a{"href" => "https://extensions.standardnotes.org/collab"} https://extensions.standardnotes.org/collab
 
   %h2 Details
-  %p The URL contains a unique, random identifier for the document, as well as an encryption key. Since the encryption key follows the # symbol, it is never sent to the server.
+  %p The URL contains a unique, random identifier for the document, as well as an encryption key and edit token. Since the encryption key follows the # symbol, it is never sent to the server.
   %p
     Edits to the document are end-to-end encrypted, meaning what you type is encrypted locally
     before being sent to the server and other users.
 
-  %p Other collaborators do not need Standard Notes to view and edit the document.
+  %p Other collaborators do not need Standard Notes to view the document. To allow others to edit the document, share the "Editing URL". For viewing access only, share the "Viewing URL".
 
   %hr
   %p
-    Note: this is an experimental extension. It does not yet have nice things, like conflict resolution.
+    Note: this is an experimental extension, and may disappear at any time, or may become available to <a ui-sref="extended">Extended</a> subscribers only in the future.

@@ -44,7 +44,7 @@ class ExtensionsCtrl {
       },
       {
         name: "Code Editor",
-        desc: "Powerful code editor with support for over 120 programming languages.",
+        desc: "A powerful code editor with support for over 120 programming languages.",
         sref: "extensions.code_editor",
         types: ["Standard Notes Extension"]
       }

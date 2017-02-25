@@ -13,6 +13,12 @@ class ProDashboardCtrl {
             desc: "An advanced Markdown editor with live preview, editor toolbar, and split pane support.",
             editor: true,
             url: $scope.user.extension_server_url + "/editors/advanced_markdown?name=Advanced Markdown"
+          },
+          {
+            name: "Code Editor",
+            desc: "A powerful code editor with support for over 120 programming languages.",
+            editor: true,
+            url: $scope.user.extension_server_url + "/editors/code?name=Code"
           }
       ]
     }

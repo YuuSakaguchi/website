@@ -20,7 +20,7 @@ class BaseCtrl {
       {name: "Jeff Camealy", link: "https://recordsetter.com/world-record/consecutive-bounces-table-tennis-ball-alternating-between-base-inside-coffee-mug/50623"},
       {name: "Carl Fletcher", link: "http://www.carlfletcher.org/"},
       {name: "Jay Zisch", link: "https://github.com/jz709u"},
-      {name: "Lev Lazinskiy", link: "https://twitter.com/levlaz"},
+      {name: "Lev Lazinskiy", link: "https://levlaz.org"},
       {name: "Noel Bautista", link: "http://codingdoodles.com/"},
       {name: "Amit Shinde", link: "https://github.com/amtsh"},
       {name: "Sergio Pantoja", link: "https://github.com/sergiopantoja"},
@@ -29,6 +29,8 @@ class BaseCtrl {
       {name: "Phil Weber", link: "https://twitter.com/philweber"},
       {name: "Jorge Bay", link: "https://twitter.com/jorgebg"},
       {name: "Jason Kim", link: "https://twitter.com/jasoki"},
+      {name: "Tom Goldsmith", link: "https://tgoldsmith.co.uk"},
+      {name: "Patrick Cunningham", link: "https://twitter.com/ptrckcnnnghm"}
     ]);
 
     function shuffle(array) {

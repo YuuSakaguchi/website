@@ -83,6 +83,18 @@ angular.module('app.main')
         }
       })
 
+      .state('extensions.code_editor', {
+        url: '/code-editor',
+        views: {
+          'content@' : {
+            templateUrl: 'templates/extensions/code_editor.html',
+            controller: function($scope){
+              $scope.iframeURL = window._ext_server + "/editors/code_demo";
+            }
+          }
+        }
+      })
+
       .state('extensions.collab', {
         url: '/collaborative-editor',
         views: {

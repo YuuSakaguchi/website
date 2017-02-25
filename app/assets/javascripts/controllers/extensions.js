@@ -41,6 +41,12 @@ class ExtensionsCtrl {
         desc: "An advanced Markdown editor with live preview, editor toolbar, and split pane support.",
         sref: "extensions.advanced_markdown",
         types: ["Standard Notes Extension"]
+      },
+      {
+        name: "Code Editor",
+        desc: "Powerful code editor with support for over 120 programming languages.",
+        sref: "extensions.code_editor",
+        types: ["Standard Notes Extension"]
       }
     ]
 
